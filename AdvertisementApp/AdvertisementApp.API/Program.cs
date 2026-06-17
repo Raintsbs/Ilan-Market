@@ -79,6 +79,7 @@ builder.Services.AddCors(options =>
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var databaseProvider = builder.Configuration["Database:Provider"] ?? "SqlServer";
 
 builder.Services.AddMemoryCache();
 var redisConnection = builder.Configuration["Redis:ConnectionString"];
@@ -91,7 +92,7 @@ else
     builder.Services.AddDistributedMemoryCache();
 }
 
-builder.Services.AddDataAccessDependencies(connectionString);
+builder.Services.AddDataAccessDependencies(connectionString, databaseProvider);
 builder.Services.AddDependencies();
 builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection(StorageOptions.SectionName));
 builder.Services.AddHostedService<SavedSearchNotificationBackgroundService>();
@@ -143,8 +144,9 @@ builder.Services.AddRateLimiter(options =>
             }));
 });
 
-builder.Services.AddHealthChecks()
-    .AddSqlServer(connectionString, name: "database");
+var healthChecks = builder.Services.AddHealthChecks();
+if (!AdvertisementApp.DataAccess.Extension.DependencyExtension.IsSqlite(databaseProvider, connectionString))
+    healthChecks.AddSqlServer(connectionString, name: "database");
 
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Jwt:Key missing. Set Jwt__Key or ILANMARKET_Jwt__Key environment variable.");

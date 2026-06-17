@@ -2,6 +2,7 @@
 using AdvertisementApp.Common.Helpers;
 using AdvertisementApp.DataAccess.Context;
 using AdvertisementApp.DataAccess.Entities;
+using AdvertisementApp.DataAccess.Extension;
 using AdvertisementApp.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,16 @@ namespace AdvertisementApp.DataAccess.Seed
 
             try
             {
-                await context.Database.MigrateAsync();
+                var provider = config["Database:Provider"] ?? "SqlServer";
+                if (DependencyExtension.IsSqlite(provider, context.Database.GetConnectionString() ?? ""))
+                {
+                    await context.Database.EnsureCreatedAsync();
+                    logger.LogInformation("SQLite EnsureCreated tamamlandı.");
+                }
+                else
+                {
+                    await context.Database.MigrateAsync();
+                }
             }
             catch (Exception ex)
             {

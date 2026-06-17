@@ -15,7 +15,7 @@ git add .
 git commit -m "İlanMarket proje teslimi"
 # GitHub’da yeni repo oluşturun, sonra:
 git remote add origin https://github.com/KULLANICI/ilanmarket.git
-git push -u origin main
+git push -u origin master
 ```
 
 ---

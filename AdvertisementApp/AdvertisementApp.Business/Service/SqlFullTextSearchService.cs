@@ -60,6 +60,8 @@ namespace AdvertisementApp.Business.Service
 
         private bool CheckAvailable()
         {
+            if (_config["Database:Provider"]?.Equals("Sqlite", StringComparison.OrdinalIgnoreCase) == true)
+                return false;
             if (!_config.GetValue("Search:FullTextEnabled", true)) return false;
             try
             {

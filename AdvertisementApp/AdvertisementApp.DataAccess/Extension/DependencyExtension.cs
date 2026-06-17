@@ -11,11 +11,24 @@ namespace AdvertisementApp.DataAccess.Extension
     {
         public const string AdminScheme = "AdminCookie";
 
-        public static void AddDataAccessDependencies(this IServiceCollection services, string connectionString)
+        public static bool IsSqlite(string? provider, string connectionString) =>
+            provider?.Equals("Sqlite", StringComparison.OrdinalIgnoreCase) == true
+            || connectionString.Contains("Data Source=", StringComparison.OrdinalIgnoreCase)
+            || connectionString.Contains("Filename=", StringComparison.OrdinalIgnoreCase);
+
+        public static void AddDataAccessDependencies(
+            this IServiceCollection services,
+            string connectionString,
+            string? databaseProvider = null)
         {
+            var useSqlite = IsSqlite(databaseProvider, connectionString);
+
             services.AddDbContext<AdvertisementAppDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                if (useSqlite)
+                    options.UseSqlite(connectionString);
+                else
+                    options.UseSqlServer(connectionString);
             });
 
             services.AddIdentity<AppUser, IdentityRole<int>>(opt =>
