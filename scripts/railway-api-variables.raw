@@ -1,0 +1,23 @@
+# Railway → api servisi → Variables → RAW Editor
+# sqlserver servisi adi tam olarak "sqlserver" olmali
+# sqlserver Variables: ACCEPT_EULA=Y, MSSQL_SA_PASSWORD=GucluSifre123!Railway
+
+ASPNETCORE_ENVIRONMENT=Staging
+ASPNETCORE_URLS=http://0.0.0.0:${{PORT}}
+
+Jwt__Key=IlanMarket2026GizliAnahtarEnAz32Karakter!!
+
+ConnectionStrings__DefaultConnection=Server=${{sqlserver.RAILWAY_PRIVATE_DOMAIN}},1433;Database=AdvertisementAppDb;User Id=sa;Password=${{sqlserver.MSSQL_SA_PASSWORD}};TrustServerCertificate=True;Encrypt=False;
+
+Storage__Provider=Local
+Payments__AllowDemo=true
+Sms__Provider=dev
+Email__Enabled=true
+Email__PickupDirectory=email-pickup
+Email__From=noreply@ilanmarket.staging
+
+App__FrontendUrl=https://ilan-market.vercel.app
+App__ApiUrl=https://${{RAILWAY_PUBLIC_DOMAIN}}
+Cors__AllowedOrigins__0=https://ilan-market.vercel.app
+
+Seed__RunCategoryCatalog=true

@@ -1,0 +1,4 @@
+# Railway sqlserver servisi → Variables
+
+ACCEPT_EULA=Y
+MSSQL_SA_PASSWORD=GucluSifre123!Railway
