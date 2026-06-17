@@ -1,0 +1,71 @@
+﻿@using AdvertisementApp.UI.Models
+@model RegisterViewModel
+@{ ViewData["Title"] = "Kayıt Ol"; }
+
+<div class="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900">Hesap Oluştur</h1>
+            <p class="text-sm text-gray-500 mt-1">Ücretsiz kayıt olun, hemen ilan verin</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+            <form asp-action="Register" method="post" class="space-y-5">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label asp-for="FirstName" class="block text-sm font-medium text-gray-700 mb-1.5"></label>
+                        <input asp-for="FirstName" type="text" placeholder="Adınız"
+                               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm" />
+                        <span asp-validation-for="FirstName" class="field-validation-error"></span>
+                    </div>
+                    <div>
+                        <label asp-for="LastName" class="block text-sm font-medium text-gray-700 mb-1.5"></label>
+                        <input asp-for="LastName" type="text" placeholder="Soyadınız"
+                               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm" />
+                        <span asp-validation-for="LastName" class="field-validation-error"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Email" class="block text-sm font-medium text-gray-700 mb-1.5">E-posta</label>
+                    <input asp-for="Email" type="email" placeholder="ornek@email.com"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm" />
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Password" class="block text-sm font-medium text-gray-700 mb-1.5">Şifre</label>
+                    <input asp-for="Password" type="password" placeholder="En az 6 karakter"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm" />
+                    <span asp-validation-for="Password" class="field-validation-error"></span>
+                </div>
+
+                <div>
+                    <label asp-for="ConfirmPassword" class="block text-sm font-medium text-gray-700 mb-1.5">Şifre Tekrar</label>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Şifrenizi tekrar girin"
+                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm" />
+                    <span asp-validation-for="ConfirmPassword" class="field-validation-error"></span>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-all shadow-sm text-sm">
+                    Kayıt Ol
+                </button>
+            </form>
+        </div>
+
+        <p class="text-center text-sm text-gray-500 mt-6">
+            Zaten hesabınız var mı?
+            <a asp-action="Login" class="text-blue-600 hover:text-blue-800 font-semibold transition-colors">Giriş yapın</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,42 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:restart": "powershell -ExecutionPolicy Bypass -File ./scripts/restart-dev.ps1",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@microsoft/signalr": "^10.0.0",
+    "@radix-ui/react-label": "^2.1.9",
+    "@radix-ui/react-separator": "^1.1.9",
+    "@radix-ui/react-slot": "^1.2.5",
+    "@radix-ui/react-switch": "^1.3.0",
+    "@react-three/fiber": "^9.6.1",
+    "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.40.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.17.0",
+    "next": "16.2.7",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.184.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.7",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

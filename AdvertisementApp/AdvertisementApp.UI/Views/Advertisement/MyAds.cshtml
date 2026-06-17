@@ -1,0 +1,9 @@
+﻿@using AdvertisementApp.Dtos.AdvertisementDtos
+@using AdvertisementApp.Common.Models
+@model PagedResult<AdvertisementListDto>
+@{
+    ViewData["Title"] = "İlanlarım";
+    ViewData["IsMyAds"] = true;
+    ViewData["Filter"] = ViewBag.Filter as AdvertisementFilterDto ?? new AdvertisementFilterDto();
+}
+<partial name="_AdvertisementList" model="Model" view-data="ViewData" />

@@ -1,0 +1,32 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio
+.vs/
+*.rsuser
+
+## Rider
+.idea/
+
+## Uploads (keep folder)
+wwwroot/uploads/*
+!wwwroot/uploads/.gitkeep
+
+## OS
+Thumbs.db
+.DS_Store
+
+## Secrets
+appsettings.*.local.json
+secrets.json
+scripts/production.env
+production.env
+.env.production
+
+## Dev email pickup (.eml files)
+**/email-pickup/

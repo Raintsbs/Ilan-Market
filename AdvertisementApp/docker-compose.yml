@@ -1,0 +1,32 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_strong_Password123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: AdvertisementApp.API/Dockerfile
+    env_file:
+      - ../scripts/production.env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=AdvertisementAppDb;User Id=sa;Password=Your_strong_Password123;TrustServerCertificate=True;"
+      ASPNETCORE_URLS: "http://+:8080"
+    ports:
+      - "5050:8080"
+    depends_on:
+      - sqlserver
+
+  ui:
+    # DEPRECATED — birincil arayuz frontend/ (Next.js). Bakim icin tutuluyor.
+    profiles: ["legacy-ui"]
+
+volumes:
+  sql_data:

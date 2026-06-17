@@ -1,0 +1,1 @@
+export { validateTitleCategory } from "./brands";

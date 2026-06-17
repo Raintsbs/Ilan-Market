@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="tr" class="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - İlanApp</title>
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: "Inter", sans-serif; }
+        .field-validation-error { color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem; display: block; }
+        .input-validation-error { border-color: #ef4444 !important; }
+        .validation-summary-errors ul { list-style: none; padding: 0; margin: 0; }
+        .validation-summary-errors li { color: #ef4444; font-size: 0.875rem; }
+
+        /* Dark mode — tablo ve kart arka planları */
+        html.dark .dm-card   { background-color: #1f2937 !important; border-color: #374151 !important; }
+        html.dark .dm-thead  { background-color: rgba(55,65,81,0.5) !important; border-color: #374151 !important; }
+        html.dark .dm-tr     { border-color: #374151 !important; }
+        html.dark .dm-tr:hover { background-color: rgba(55,65,81,0.4) !important; }
+        html.dark .dm-td     { color: #e5e7eb !important; }
+        html.dark .dm-td-muted { color: #9ca3af !important; }
+        html.dark .dm-th     { color: #d1d5db !important; }
+        html.dark .dm-input  { background-color: #374151 !important; border-color: #4b5563 !important; color: #f3f4f6 !important; }
+        html.dark .dm-btn    { background-color: #374151 !important; border-color: #4b5563 !important; color: #d1d5db !important; }
+        html.dark .dm-btn:hover { background-color: #4b5563 !important; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col transition-colors duration-200">
+
+    <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a asp-controller="Home" asp-action="Index" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <span class="text-gray-900 dark:text-white font-bold text-lg">İlan<span class="text-blue-600">App</span></span>
+                    </a>
+                    <div class="hidden md:flex items-center gap-6">
+                        <a asp-controller="Home" asp-action="Index" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">Ana Sayfa</a>
+                        <a asp-controller="Advertisement" asp-action="Index" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">İlanlar</a>
+                        <a asp-controller="Category" asp-action="Index" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">Kategoriler</a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Advertisement" asp-action="MyAds" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">İlanlarım</a>
+                            <a asp-controller="Favorite" asp-action="Index" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium text-sm transition-colors">Favorilerim</a>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+                               class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 hover:bg-red-200 transition-colors">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/></svg>
+                                Admin
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    @* Tema Toggle Butonu *@
+                    <button id="themeToggle" onclick="toggleTheme()"
+                            class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all"
+                            title="Tema değiştir">
+                        <svg id="iconSun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                        </svg>
+                        <svg id="iconMoon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                            <span class="text-blue-700 dark:text-blue-300 font-semibold text-xs">@(User.Identity.Name?.Length > 0 ? User.Identity.Name.Substring(0,1).ToUpper() : "U")</span>
+                        </div>
+                        <a asp-controller="Profile" asp-action="Index" class="text-sm text-gray-700 dark:text-gray-300 font-medium hidden sm:block max-w-[160px] truncate hover:text-blue-600 dark:hover:text-blue-400 transition-colors">@User.Identity.Name</a>
+                        <a asp-controller="Advertisement" asp-action="Create" class="hidden sm:inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow-sm transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            İlan Ver
+                        </a>
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm shadow-sm transition-all cursor-pointer">Çıkış</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm shadow-sm transition-all">Giriş</a>
+                        <a asp-controller="Account" asp-action="Register" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow-sm transition-all">Kayıt Ol</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            <div class="flex items-center gap-3 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                @TempData["Success"]
+            </div>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            <div class="flex items-center gap-3 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                @TempData["Error"]
+            </div>
+        </div>
+    }
+
+    <main class="flex-1">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-gray-500 dark:text-gray-400 text-sm">&copy; @DateTime.Now.Year <strong class="text-blue-600">İlanApp</strong> — Tüm hakları saklıdır.</span>
+                <div class="flex items-center gap-4 text-sm text-gray-400 dark:text-gray-500">
+                    <a href="#" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Gizlilik</a>
+                    <a href="#" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Kullanım Koşulları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        // Tema toggle
+        function toggleTheme() {
+            var isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('iconSun').classList.toggle('hidden', !isDark);
+            document.getElementById('iconMoon').classList.toggle('hidden', isDark);
+        }
+
+        // Sayfa yüklenince ikonu ayarla
+        (function () {
+            var isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('iconSun').classList.toggle('hidden', !isDark);
+            document.getElementById('iconMoon').classList.toggle('hidden', isDark);
+        })();
+        (function () {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/notification")
+                .withAutomaticReconnect()
+                .build();
+
+            connection.on("OnChange", function (type) {
+                // Sadece ilan ve kategori değişikliklerinde yenile
+                // Gecikme: redirect tamamlandıktan sonra yenilensin
+                if (type === "category" || type === "advertisement") {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1500);
+                }
+            });
+
+            connection.start().catch(function (err) {
+                console.warn("SignalR bağlantısı kurulamadı:", err);
+            });
+        })();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @* Silme Onay Modalı *@
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="deleteModalBackdrop"></div>
+        <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-sm mx-4 p-6">
+            <div class="flex flex-col items-center text-center gap-4">
+                <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center">
+                    <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Silmek istediğinize emin misiniz?</h3>
+                    <p class="text-sm text-gray-500 mt-1">Bu işlem geri alınamaz.</p>
+                </div>
+                <div class="flex gap-3 w-full mt-2">
+                    <button id="deleteCancelBtn"
+                            class="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-all">
+                        Vazgeç
+                    </button>
+                    <button id="deleteConfirmBtn"
+                            class="flex-1 px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-all">
+                        Evet, Sil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var modal = document.getElementById('deleteModal');
+            var confirmBtn = document.getElementById('deleteConfirmBtn');
+            var cancelBtn = document.getElementById('deleteCancelBtn');
+            var backdrop = document.getElementById('deleteModalBackdrop');
+            var pendingForm = null;
+
+            function openModal(form) {
+                pendingForm = form;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                pendingForm = null;
+            }
+
+            document.querySelectorAll('form[data-confirm-delete]').forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    openModal(form);
+                });
+            });
+
+            confirmBtn.addEventListener('click', function () {
+                if (pendingForm) {
+                    pendingForm.submit();
+                }
+                closeModal();
+            });
+
+            cancelBtn.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', closeModal);
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeModal();
+            });
+        })();
+    </script>
+</body>
+</html>

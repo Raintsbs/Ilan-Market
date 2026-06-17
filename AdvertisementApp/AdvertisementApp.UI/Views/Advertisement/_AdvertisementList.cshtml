@@ -1,0 +1,177 @@
+﻿@using AdvertisementApp.Dtos.AdvertisementDtos
+@using AdvertisementApp.Common.Models
+@model PagedResult<AdvertisementListDto>
+@{
+    var filter = ViewData["Filter"] as AdvertisementApp.Dtos.AdvertisementDtos.AdvertisementFilterDto ?? new AdvertisementApp.Dtos.AdvertisementDtos.AdvertisementFilterDto();
+    var isMyAds = ViewData["IsMyAds"] as bool? ?? false;
+    var actionName = isMyAds ? "MyAds" : "Index";
+}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">@(isMyAds ? "İlanlarım" : "İlanlar")</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                @if (isMyAds) { <text>Yalnızca sizin eklediğiniz ilanlar listelenir.</text> }
+                else { <text>Tüm aktif ilanları buradan görüntüleyebilirsiniz.</text> }
+            </p>
+        </div>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a asp-action="Create" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm shadow-sm transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Yeni İlan Ver
+            </a>
+        }
+    </div>
+
+    @if (!isMyAds)
+    {
+        <div class="flex items-start gap-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300 px-4 py-3 rounded-lg text-sm mb-6">
+            <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Tüm kullanıcıların aktif ilanları listelenmektedir. Sadece kendi ilanlarınız için <a asp-action="MyAds" class="font-semibold underline hover:text-blue-900 dark:hover:text-blue-200">İlanlarım</a> sayfasını kullanın.</span>
+        </div>
+    }
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-6">
+        <form method="get" asp-controller="Advertisement" asp-action="@actionName" class="flex flex-col sm:flex-row gap-3" id="filterForm">
+            <div class="flex-1 relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" name="Search" id="searchInput" value="@filter.Search" placeholder="İlan başlığı ara..."
+                       class="dm-input w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm bg-white" />
+            </div>
+            <select name="CategoryId" id="categorySelect" asp-items="ViewBag.Categories"
+                    class="dm-input w-full sm:w-52 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                <option value="">Tüm Kategoriler</option>
+            </select>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm whitespace-nowrap transition-all">
+                Filtrele
+            </button>
+        </form>
+    </div>
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="dm-thead dm-tr bg-gray-50 border-b border-gray-200">
+                    <th class="dm-th text-left px-5 py-3.5 font-semibold text-gray-600 text-xs uppercase tracking-wide">Başlık</th>
+                    <th class="dm-th text-left px-5 py-3.5 font-semibold text-gray-600 text-xs uppercase tracking-wide">Kategori</th>
+                    <th class="dm-th text-left px-5 py-3.5 font-semibold text-gray-600 text-xs uppercase tracking-wide hidden sm:table-cell">Durum</th>
+                    <th class="dm-th text-left px-5 py-3.5 font-semibold text-gray-600 text-xs uppercase tracking-wide hidden md:table-cell">Tarih</th>
+                    <th class="px-5 py-3.5"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Items.Any())
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr class="dm-tr border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                            <td class="dm-td px-5 py-4 font-medium text-gray-900">@item.Title</td>
+                            <td class="px-5 py-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">@item.CategoryName</span>
+                            </td>
+                            <td class="px-5 py-4 hidden sm:table-cell">
+                                @if (item.IsActive)
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300">
+                                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Aktif
+                                    </span>
+                                }
+                                else if (item.Status == AdvertisementApp.Entities.AdvertisementStatus.Pending)
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">
+                                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>Onay Bekliyor
+                                    </span>
+                                }
+                                else if (item.Status == AdvertisementApp.Entities.AdvertisementStatus.Rejected)
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300">
+                                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>Reddedildi
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+                                        <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>Pasif
+                                    </span>
+                                }
+                            </td>
+                            <td class="px-5 py-4 text-gray-500 dark:text-gray-400 hidden md:table-cell">@item.CreatedTime.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="px-5 py-4 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a asp-action="Details" asp-route-id="@item.Id"
+                                       class="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium text-xs border border-blue-200 dark:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 px-3 py-1.5 rounded-lg transition-all">
+                                        Detay
+                                    </a>
+                                    @if (User.Identity?.IsAuthenticated == true &&
+                                         (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == item.UserId.ToString() || User.IsInRole("Admin")))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id"
+                                           class="inline-flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-gray-800 font-medium text-xs border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 px-3 py-1.5 rounded-lg transition-all">
+                                            Düzenle
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="inline" data-confirm-delete>
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-1 text-red-600 dark:text-red-400 hover:text-red-800 font-medium text-xs border border-red-200 dark:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 px-3 py-1.5 rounded-lg transition-all">
+                                                Sil
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="px-5 py-16 text-center">
+                            <svg class="w-12 h-12 mx-auto mb-3 text-gray-200 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <p class="font-medium text-gray-500 dark:text-gray-400">Henüz ilan bulunamadı.</p>
+                            @if (isMyAds && User.Identity?.IsAuthenticated == true)
+                            {
+                                <p class="text-sm text-gray-400 mt-1">
+                                    <a asp-action="Create" class="text-blue-600 hover:underline">İlk ilanınızı ekleyin</a>
+                                </p>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model != null && Model.TotalPages > 1)
+    {
+        <div class="flex items-center justify-center gap-1 mt-6">
+            @for (var p = 1; p <= Model.TotalPages; p++)
+            {
+                <a asp-controller="Advertisement" asp-action="@actionName"
+                   asp-route-page="@p" asp-route-search="@filter.Search" asp-route-categoryId="@filter.CategoryId"
+                   class="@(p == Model.Page ? "bg-blue-600 text-white" : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600") px-3 py-1.5 rounded-lg text-sm font-medium transition-all">
+                    @p
+                </a>
+            }
+        </div>
+    }
+</div>
+
+<script>
+(function () {
+    var searchInput = document.getElementById('searchInput');
+    var categorySelect = document.getElementById('categorySelect');
+    var filterForm = document.getElementById('filterForm');
+    var debounceTimer;
+    function submitForm() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function () { filterForm.submit(); }, 400);
+    }
+    if (searchInput) searchInput.addEventListener('input', submitForm);
+    if (categorySelect) categorySelect.addEventListener('change', function () { clearTimeout(debounceTimer); filterForm.submit(); });
+})();
+</script>

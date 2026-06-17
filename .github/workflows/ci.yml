@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: Your_strong_Password123
+        ports:
+          - 1433:1433
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        working-directory: AdvertisementApp
+        run: dotnet restore AdvertisementApp.API/AdvertisementApp.API.csproj
+
+      - name: Build
+        working-directory: AdvertisementApp
+        run: dotnet build -c Release --no-restore
+
+      - name: Test
+        working-directory: AdvertisementApp
+        run: dotnet test AdvertisementApp.Tests/AdvertisementApp.Tests.csproj -c Release --no-build --verbosity normal
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Frontend lint
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run lint

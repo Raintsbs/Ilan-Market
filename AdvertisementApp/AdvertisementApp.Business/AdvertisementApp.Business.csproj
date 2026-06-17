@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="Iyzipay" Version="2.1.78" />
+    <PackageReference Include="Stripe.net" Version="47.0.0" />
+    <PackageReference Include="WebPush" Version="1.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdvertisementApp.Common\AdvertisementApp.Common.csproj" />
+    <ProjectReference Include="..\AdvertisementApp.DataAccess\AdvertisementApp.DataAccess.csproj" />
+    <ProjectReference Include="..\AdvertisementApp.Dtos\AdvertisementApp.Dtos.csproj" />
+  </ItemGroup>
+
+</Project>

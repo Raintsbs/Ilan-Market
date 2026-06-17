@@ -1,0 +1,290 @@
+@using AdvertisementApp.Dtos.AdvertisementDtos
+@using AdvertisementApp.DataAccess.Entities
+@{ ViewData["Title"] = "Dashboard"; }
+
+@{
+    var recentAds = ViewBag.RecentAds as List<AdvertisementListDto> ?? new List<AdvertisementListDto>();
+    var recentUsers = ViewBag.RecentUsers as List<AppUser> ?? new List<AppUser>();
+    var chartLabels = ViewBag.ChartLabels as string ?? "[]";
+    var chartData = ViewBag.ChartData as string ?? "[]";
+    int pendingAds = ViewBag.PendingAds ?? 0;
+}
+
+@* İstatistik Kartları *@
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-5 mb-8">
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td text-2xl font-bold text-gray-900 dark:text-white">@ViewBag.TotalAds</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Toplam İlan</p>
+        </div>
+    </div>
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td text-2xl font-bold text-gray-900 dark:text-white">@ViewBag.ActiveAds</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Aktif İlan</p>
+        </div>
+    </div>
+
+    <a asp-area="Admin" asp-controller="Advertisements" asp-action="Pending"
+       class="bg-white rounded-xl border @(pendingAds > 0 ? "border-amber-300 bg-amber-50" : "border-gray-200") shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 @(pendingAds > 0 ? "bg-amber-100" : "bg-gray-100") rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 @(pendingAds > 0 ? "text-amber-600" : "text-gray-400")" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="text-2xl font-bold @(pendingAds > 0 ? "text-amber-700" : "text-gray-900")">@pendingAds</p>
+            <p class="text-sm @(pendingAds > 0 ? "text-amber-600 font-medium" : "text-gray-500")">Onay Bekliyor</p>
+        </div>
+    </a>
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td text-2xl font-bold text-gray-900 dark:text-white">@ViewBag.TotalCategories</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Kategori</p>
+        </div>
+    </div>
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-center gap-4">
+        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td text-2xl font-bold text-gray-900 dark:text-white">@ViewBag.TotalUsers</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Kullanıcı</p>
+        </div>
+    </div>
+</div>
+
+@* Grafikler *@
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <h3 class="font-semibold text-gray-900 text-sm mb-4">Kategori Bazlı İlan Dağılımı</h3>
+        <div class="flex items-center justify-center" style="height:260px">
+            <canvas id="doughnutChart"></canvas>
+        </div>
+    </div>
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <h3 class="font-semibold text-gray-900 text-sm mb-4">Kategorilere Göre İlan Sayısı</h3>
+        <div style="height:260px">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+</div>
+
+@* Hızlı Erişim *@
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+    <a asp-area="Admin" asp-controller="Advertisements" asp-action="Index"
+       class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow flex items-center gap-4 group">
+        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-700 transition-colors">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td font-semibold text-gray-900 text-sm">İlan Yönetimi</p>
+            <p class="dm-td-muted text-xs text-gray-500 mt-0.5">Tüm ilanları yönet</p>
+        </div>
+    </a>
+    <a asp-area="Admin" asp-controller="Categories" asp-action="Index"
+       class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow flex items-center gap-4 group">
+        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-purple-700 transition-colors">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td font-semibold text-gray-900 text-sm">Kategori Yönetimi</p>
+            <p class="dm-td-muted text-xs text-gray-500 mt-0.5">Kategorileri yönet</p>
+        </div>
+    </a>
+    <a asp-area="Admin" asp-controller="Users" asp-action="Index"
+       class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm p-5 hover:shadow-md transition-shadow flex items-center gap-4 group">
+        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-orange-600 transition-colors">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </div>
+        <div>
+            <p class="dm-td font-semibold text-gray-900 text-sm">Kullanıcı Yönetimi</p>
+            <p class="dm-td-muted text-xs text-gray-500 mt-0.5">Kullanıcıları yönet</p>
+        </div>
+    </a>
+</div>
+
+@* Son İlanlar ve Son Kullanıcılar *@
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dm-tr">
+            <h3 class="dm-td font-semibold text-gray-900 text-sm">Son Eklenen İlanlar</h3>
+            <a asp-area="Admin" asp-controller="Advertisements" asp-action="Index"
+               class="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">Tümünü Gör →</a>
+        </div>
+        @if (recentAds.Any())
+        {
+            <ul class="divide-y divide-gray-50">
+                @foreach (var ad in recentAds)
+                {
+                    <li class="px-5 py-3.5 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
+                        <div class="min-w-0">
+                            <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">@ad.Title</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">@ad.CategoryName</span>
+                                <span class="ml-2">@ad.CreatedTime.ToString("dd.MM.yyyy HH:mm")</span>
+                            </p>
+                        </div>
+                        @if (ad.Status == AdvertisementApp.Entities.AdvertisementStatus.Pending)
+                        {
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 flex-shrink-0">
+                                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>Bekliyor
+                            </span>
+                        }
+                        else if (ad.IsActive)
+                        {
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 flex-shrink-0">
+                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Aktif
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 flex-shrink-0">
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>Pasif
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="px-5 py-10 text-center text-sm text-gray-400">Henüz ilan yok.</div>
+        }
+    </div>
+
+    <div class="dm-card bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dm-tr">
+            <h3 class="dm-td font-semibold text-gray-900 text-sm">Son Kayıt Olan Kullanıcılar</h3>
+            <a asp-area="Admin" asp-controller="Users" asp-action="Index"
+               class="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">Tümünü Gör →</a>
+        </div>
+        @if (recentUsers.Any())
+        {
+            <ul class="divide-y divide-gray-50">
+                @foreach (var user in recentUsers)
+                {
+                    <li class="px-5 py-3.5 flex items-center gap-3 hover:bg-gray-50 transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-bold text-blue-700">
+                                @(user.FirstName?.Length > 0 ? user.FirstName[0].ToString().ToUpper() : "?")
+                            </span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">@user.FirstName @user.LastName</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 truncate">@user.Email</p>
+                        </div>
+                        @if (user.EmailConfirmed)
+                        {
+                            <span class="inline-flex items-center gap-1 text-xs text-green-600 flex-shrink-0">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                Onaylı
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-xs text-gray-400 flex-shrink-0">Onaysız</span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="px-5 py-10 text-center text-sm text-gray-400">Henüz kullanıcı yok.</div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    var labels = @Html.Raw(chartLabels);
+    var data   = @Html.Raw(chartData);
+
+    var colors = [
+        '#3b82f6','#8b5cf6','#10b981','#f59e0b','#ef4444',
+        '#06b6d4','#ec4899','#84cc16','#f97316','#6366f1'
+    ];
+
+    var bgColors = labels.map(function(_, i) { return colors[i % colors.length]; });
+
+    // Doughnut
+    new Chart(document.getElementById('doughnutChart'), {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: bgColors,
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { position: 'right', labels: { font: { size: 11 }, padding: 12 } }
+            }
+        }
+    });
+
+    // Bar
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'İlan Sayısı',
+                data: data,
+                backgroundColor: bgColors,
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1, font: { size: 11 } },
+                    grid: { color: '#f3f4f6' }
+                },
+                x: {
+                    ticks: { font: { size: 11 } },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+}

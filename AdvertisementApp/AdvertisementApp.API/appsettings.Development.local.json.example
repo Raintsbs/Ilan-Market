@@ -1,0 +1,7 @@
+{
+  "Iyzico": {
+    "ApiKey": "sandbox-API_KEY_BURAYA",
+    "SecretKey": "sandbox-SECRET_KEY_BURAYA",
+    "BaseUrl": "https://sandbox-api.iyzipay.com"
+  }
+}

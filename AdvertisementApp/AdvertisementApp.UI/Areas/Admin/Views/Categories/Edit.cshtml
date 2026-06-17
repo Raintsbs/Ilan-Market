@@ -1,0 +1,29 @@
+@model CategoryUpdateDto
+@{ ViewData["Title"] = "Kategori Düzenle"; }
+
+<div class="max-w-lg">
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+        <form asp-area="Admin" asp-controller="Categories" asp-action="Edit" method="post" class="space-y-5">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg text-sm"></div>
+            <div>
+                <label asp-for="Name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Kategori Adı</label>
+                <input asp-for="Name" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
+                <span asp-validation-for="Name" class="field-validation-error"></span>
+            </div>
+            <div>
+                <label asp-for="Description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Açıklama</label>
+                <textarea asp-for="Description" rows="3" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"></textarea>
+            </div>
+            <div class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                <input asp-for="IsActive" type="checkbox" id="isActive" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer" />
+                <label for="isActive" class="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">Aktif</label>
+            </div>
+            <div class="flex items-center gap-3 pt-2">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-all shadow-sm">Güncelle</button>
+                <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold px-6 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 text-sm transition-all">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
