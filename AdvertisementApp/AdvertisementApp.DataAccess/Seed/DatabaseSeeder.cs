@@ -90,6 +90,15 @@ namespace AdvertisementApp.DataAccess.Seed
             if (admin != null && !await userManager.IsInRoleAsync(admin, AppRoles.Admin))
                 await userManager.AddToRoleAsync(admin, AppRoles.Admin);
 
+            await EnsureSeedUserAsync(
+                userManager,
+                logger,
+                email: "tahatokay2006@gmail.com",
+                password: "123456",
+                firstName: "Taha",
+                lastName: "Tokay",
+                role: AppRoles.User);
+
             if (config.GetValue("Seed:RunCategoryCatalog", false))
             {
                 await CategoryCatalogSeeder.SeedFullCatalogAsync(context, logger);
@@ -103,6 +112,49 @@ namespace AdvertisementApp.DataAccess.Seed
 
             if (config.GetValue("Seed:RunLegalPages", true))
                 await LegalPagesSeeder.EnsureAsync(context, logger);
+        }
+
+        private static async Task EnsureSeedUserAsync(
+            UserManager<AppUser> userManager,
+            ILogger logger,
+            string email,
+            string password,
+            string firstName,
+            string lastName,
+            string role)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                user = new AppUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true,
+                    FirstName = firstName,
+                    LastName = lastName,
+                };
+                var createResult = await userManager.CreateAsync(user, password);
+                if (!createResult.Succeeded)
+                {
+                    logger.LogWarning("{Email} oluşturulamadı: {Errors}",
+                        email, string.Join(", ", createResult.Errors.Select(e => e.Description)));
+                    return;
+                }
+            }
+            else
+            {
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var resetResult = await userManager.ResetPasswordAsync(user, token, password);
+                if (!resetResult.Succeeded)
+                {
+                    logger.LogWarning("{Email} şifresi güncellenemedi: {Errors}",
+                        email, string.Join(", ", resetResult.Errors.Select(e => e.Description)));
+                }
+            }
+
+            if (!await userManager.IsInRoleAsync(user, role))
+                await userManager.AddToRoleAsync(user, role);
         }
 
         private static async Task BackfillCategorySlugsAsync(AdvertisementAppDbContext context, ILogger logger)
