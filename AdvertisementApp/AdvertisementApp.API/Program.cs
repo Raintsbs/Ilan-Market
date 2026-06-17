@@ -19,6 +19,10 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var railwayPort = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(railwayPort))
+    builder.WebHost.UseUrls($"http://0.0.0.0:{railwayPort}");
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiExceptionFilter>();
@@ -231,15 +235,7 @@ if (app.Environment.IsProduction())
         ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
     });
     app.UseHsts();
-}
-
-if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
-
-await DatabaseSeeder.SeedAsync(app.Services);
-using (var scope = app.Services.CreateScope())
-{
-    await scope.ServiceProvider.GetRequiredService<ILocationService>().EnsureSeededAsync();
 }
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
@@ -258,5 +254,19 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<AppHub>("/hubs/app").RequireCors("NextJs");
 app.MapHealthChecks("/health");
+
+_ = Task.Run(async () =>
+{
+    try
+    {
+        await DatabaseSeeder.SeedAsync(app.Services);
+        using var scope = app.Services.CreateScope();
+        await scope.ServiceProvider.GetRequiredService<ILocationService>().EnsureSeededAsync();
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Arka plan seed/migration basarisiz — API yine de calisir; DB baglantisini kontrol edin.");
+    }
+});
 
 app.Run();
