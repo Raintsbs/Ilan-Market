@@ -24,4 +24,8 @@
     <ProjectReference Include="..\AdvertisementApp.Dtos\AdvertisementApp.Dtos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\scripts\data\turkey-locations.json" Link="scripts\data\turkey-locations.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using AdvertisementApp.Business.Interface;
 using AdvertisementApp.DataAccess.Context;
+using AdvertisementApp.DataAccess.Seed;
 using AdvertisementApp.Dtos.Marketplace;
 using AdvertisementApp.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -24,47 +25,8 @@ namespace AdvertisementApp.Business.Service
             _logger = logger;
         }
 
-        public async Task EnsureSeededAsync()
-        {
-            if (await _db.Provinces.AnyAsync()) return;
-
-            var path = ResolveSeedPath();
-            if (!File.Exists(path))
-            {
-                _logger.LogWarning("Turkey locations seed not found: {Path}", path);
-                return;
-            }
-
-            var json = await File.ReadAllTextAsync(path);
-            using var doc = JsonDocument.Parse(json);
-            if (!doc.RootElement.TryGetProperty("provinces", out var provincesEl)) return;
-
-            foreach (var p in provincesEl.EnumerateArray())
-            {
-                var province = new Province
-                {
-                    Id = p.GetProperty("id").GetInt32(),
-                    Name = p.GetProperty("name").GetString()!,
-                    PlateCode = p.TryGetProperty("plate", out var plate) ? plate.GetString() : null,
-                    SortOrder = p.GetProperty("id").GetInt32(),
-                };
-                _db.Provinces.Add(province);
-
-                if (!p.TryGetProperty("districts", out var districtsEl)) continue;
-                foreach (var d in districtsEl.EnumerateArray())
-                {
-                    _db.Districts.Add(new District
-                    {
-                        Id = d.GetProperty("id").GetInt32(),
-                        ProvinceId = province.Id,
-                        Name = d.GetProperty("name").GetString()!,
-                    });
-                }
-            }
-
-            await _db.SaveChangesAsync();
-            _logger.LogInformation("Seeded {Count} provinces from {Path}", await _db.Provinces.CountAsync(), path);
-        }
+        public async Task EnsureSeededAsync() =>
+            await TurkeyLocationSeeder.EnsureSeededAsync(_db, _logger);
 
         public async Task<List<ProvinceDto>> GetProvincesAsync() =>
             await _db.Provinces.AsNoTracking()
@@ -119,18 +81,6 @@ namespace AdvertisementApp.Business.Service
                 _logger.LogWarning(ex, "Neighborhood fetch failed for district {DistrictId}", districtId);
                 return cached;
             }
-        }
-
-        private static string ResolveSeedPath()
-        {
-            var candidates = new[]
-            {
-                Path.Combine(AppContext.BaseDirectory, "scripts", "data", "turkey-locations.json"),
-                Path.Combine(Directory.GetCurrentDirectory(), "scripts", "data", "turkey-locations.json"),
-                Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "scripts", "data", "turkey-locations.json")),
-                @"c:\Projects\advertisement\AdvertisementApp\scripts\data\turkey-locations.json",
-            };
-            return candidates.FirstOrDefault(File.Exists) ?? candidates[^1];
         }
     }
 }
