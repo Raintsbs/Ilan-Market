@@ -12,7 +12,7 @@ using AdvertisementApp.Business.Service;
 using AdvertisementApp.DataAccess.Extension;
 using AdvertisementApp.DataAccess.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -253,7 +253,10 @@ app.UseMiddleware<AccountStatusMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<AppHub>("/hubs/app").RequireCors("NextJs");
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = check => check.Name != "database",
+});
 
 _ = Task.Run(async () =>
 {
