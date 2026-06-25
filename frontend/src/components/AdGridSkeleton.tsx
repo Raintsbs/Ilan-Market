@@ -1,4 +1,5 @@
 import { AdCardSkeleton } from "./AdCardSkeleton";
+import { gridAds3 } from "@/lib/uiStyles";
 
 type AdGridSkeletonProps = {
   count?: number;
@@ -16,7 +17,7 @@ export function AdGridSkeleton({
       {showSummary && (
         <div className="mb-4 h-4 w-32 animate-pulse rounded-md bg-slate-200 dark:bg-slate-700" />
       )}
-      <div className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${className}`.trim()}>
+      <div className={`${gridAds3} ${className}`.trim()}>
         {Array.from({ length: count }, (_, index) => (
           <AdCardSkeleton key={index} />
         ))}

@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { SiteChrome } from "@/components/SiteChrome";
 import { Providers } from "@/components/Providers";
-import "bootstrap/dist/css/bootstrap-grid.min.css";
-import "bootstrap/dist/css/bootstrap-utilities.min.css";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -32,14 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" suppressHydrationWarning className={`${plusJakarta.variable} h-full`}>
-      <head>
-        <script
+      <body className="flex min-h-full flex-col antialiased bg-[var(--background)] text-[var(--foreground)]">
+        <Script
+          id="theme-locale-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme_mode');var d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches);if(d)document.documentElement.classList.add('dark');var l=localStorage.getItem('app_locale');if(l)document.documentElement.lang=l;}catch(e){}})();`,
           }}
         />
-      </head>
-      <body className="flex min-h-full flex-col antialiased bg-[var(--background)] text-[var(--foreground)]">
         <Providers>
           <SiteChrome>{children}</SiteChrome>
         </Providers>

@@ -13,6 +13,7 @@ import { Pagination } from "@/components/Pagination";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
 import { useAdsChangeListener } from "@/lib/adsSync";
+import { gridAds, siteShell } from "@/lib/uiStyles";
 import type { Advertisement, Category, PagedResult } from "@/lib/types";
 
 export function HomePage() {
@@ -304,10 +305,10 @@ export function HomePage() {
   return (
     <>
       <section className="hero-mesh relative overflow-hidden text-white">
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className={`relative ${siteShell} py-10 sm:py-16 lg:py-20`}>
           <div className="max-w-2xl">
             <p
-              className={`mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-300/90 ${
+              className={`mb-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-blue-300/90 sm:mb-3 sm:text-xs ${
                 heroActive ? "home-hero-line" : "home-hero-pending"
               }`}
               style={heroActive ? ({ "--hero-delay": "0ms" } as React.CSSProperties) : undefined}
@@ -315,7 +316,7 @@ export function HomePage() {
               İlanMarket
             </p>
             <h1
-              className={`text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-tight ${
+              className={`text-2xl font-bold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-tight ${
                 heroActive ? "home-hero-line" : "home-hero-pending"
               }`}
               style={heroActive ? ({ "--hero-delay": "80ms" } as React.CSSProperties) : undefined}
@@ -323,7 +324,7 @@ export function HomePage() {
               {t("home.title")}
             </h1>
             <p
-              className={`mt-4 max-w-lg text-base leading-relaxed text-slate-300 sm:text-lg ${
+              className={`mt-3 max-w-lg text-sm leading-relaxed text-slate-300 sm:mt-4 sm:text-base sm:leading-relaxed md:text-lg ${
                 heroActive ? "home-hero-line" : "home-hero-pending"
               }`}
               style={heroActive ? ({ "--hero-delay": "160ms" } as React.CSSProperties) : undefined}
@@ -334,8 +335,8 @@ export function HomePage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-3">
+      <div className={`${siteShell} py-5 sm:py-8`}>
+        <div className="flex flex-col gap-3 sm:gap-4">
           <div className="min-w-0 flex-1">
             <AdFilters
               search={search}
@@ -381,7 +382,7 @@ export function HomePage() {
               </p>
             </div>
             <div
-              className={`home-grid-layout grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4${loading ? " pointer-events-none opacity-60" : ""}`}
+              className={`home-grid-layout ${gridAds}${loading ? " pointer-events-none opacity-60" : ""}`}
             >
               {result.items.map((ad, index) => (
                 <div

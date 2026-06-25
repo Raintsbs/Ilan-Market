@@ -111,7 +111,7 @@ export function SignUpFlow({
                 )}
 
                 <form onSubmit={onSubmit} className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <input
                       required
                       placeholder={t("auth.firstName")}

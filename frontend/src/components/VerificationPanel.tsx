@@ -5,7 +5,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api, ApiError } from "@/lib/api";
 import { formFieldClass } from "@/lib/formStyles";
-import { surfaceCard } from "@/lib/uiStyles";
+import { surfaceCardPad } from "@/lib/uiStyles";
 import type { VerificationRequest } from "@/lib/types";
 
 export function VerificationPanel() {
@@ -43,7 +43,7 @@ export function VerificationPanel() {
   if (status === undefined) return null;
 
   return (
-    <section className={`mt-8 p-6 ${surfaceCard}`}>
+    <section className={`mt-8 ${surfaceCardPad}`}>
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("verify.title")}</h2>
       <p className="mt-1 text-sm text-slate-500">{t("verify.subtitle")}</p>
 

@@ -517,6 +517,7 @@ export const tr = {
   "filter.minPrice": "Min fiyat",
   "filter.maxPrice": "Max fiyat",
   "filter.featuredOnly": "Öne çıkanlar",
+  "filter.moreFilters": "Fiyat ve diğer filtreler",
   "messages.title": "Mesajlarım",
   "messages.empty": "Henüz mesajınız yok.",
   "messages.newToSeller": "Satıcıya ilk mesajınızı yazın",

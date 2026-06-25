@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AdCard } from "@/components/AdCard";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
+import { gridAds } from "@/lib/uiStyles";
 import type { Advertisement } from "@/lib/types";
 
 type SimilarAdsSectionProps = {
@@ -33,7 +34,7 @@ export function SimilarAdsSection({ advertisementId }: SimilarAdsSectionProps) {
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t("similar.title")}</h2>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("similar.subtitle")}</p>
       </div>
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className={`mt-6 ${gridAds}`}>
         {items.map((ad) => (
           <AdCard key={ad.id} ad={ad} />
         ))}

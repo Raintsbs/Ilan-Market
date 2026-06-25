@@ -16,7 +16,7 @@ import { api } from "@/lib/api";
 import { getImageUrl } from "@/lib/image";
 import { formatDate } from "@/lib/status";
 import { PageHeader } from "@/components/PageHeader";
-import { linkBack, pageContainerMd, surfaceCard } from "@/lib/uiStyles";
+import { gridAds3, linkBack, pageContainerMd, surfaceCardPad } from "@/lib/uiStyles";
 import type { Advertisement, SellerProfile } from "@/lib/types";
 
 export default function StorePage() {
@@ -70,14 +70,14 @@ export default function StorePage() {
         </div>
       )}
 
-      <div className={`${surfaceCard} mt-6 p-6`}>
+      <div className={`${surfaceCardPad} mt-6`}>
         <div className="flex flex-wrap items-start gap-4">
           {avatar && (
-            <div className="relative h-16 w-16 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
               <SafeImage src={avatar} alt="" fill className="object-cover" />
             </div>
           )}
-          <div className="flex-1">
+          <div className="min-w-0 flex-1">
             <PageHeader
               title={profile.displayName}
               subtitle={
@@ -109,7 +109,7 @@ export default function StorePage() {
           </div>
         </div>
 
-        <dl className="mt-6 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
+        <dl className="mt-6 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <dt className="text-slate-500 dark:text-slate-400">{t("seller.listings")}</dt>
             <dd className="font-semibold text-slate-900 dark:text-white">{profile.activeListingCount}</dd>
@@ -131,7 +131,7 @@ export default function StorePage() {
         </dl>
       </div>
 
-      <div className={`mt-8 p-6 ${surfaceCard}`}>
+      <div className={`mt-8 ${surfaceCardPad}`}>
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("reviews.title")}</h2>
         <div className="mt-4">
           <SellerRatingBlock
@@ -143,7 +143,7 @@ export default function StorePage() {
       </div>
 
       <h2 className="mt-10 text-lg font-semibold text-slate-900 dark:text-white">{t("seller.listings")}</h2>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className={`mt-4 ${gridAds3}`}>
         {listings.map((ad) => (
           <AdCard key={ad.id} ad={ad} />
         ))}

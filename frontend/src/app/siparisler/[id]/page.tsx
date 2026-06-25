@@ -14,7 +14,7 @@ import { api, ApiError } from "@/lib/api";
 import { formatPrice } from "@/lib/listingDetails";
 import { formFieldClass } from "@/lib/formStyles";
 import { formatDate } from "@/lib/status";
-import { linkBack, pageContainerMd, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainerMd, surfaceCardPad } from "@/lib/uiStyles";
 import type { CargoCarrier, MarketplaceOrder } from "@/lib/types";
 
 export default function OrderDetailPage() {
@@ -198,7 +198,7 @@ export default function OrderDetailPage() {
   return (
     <div className={pageContainerMd}>
       <PageHeader title={t("orders.detail")} />
-      <div className={`mt-6 p-6 ${surfaceCard}`}>
+      <div className={`mt-6 ${surfaceCardPad}`}>
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
           {order.advertisementTitle}
         </h2>
@@ -240,7 +240,7 @@ export default function OrderDetailPage() {
       </div>
 
       {order.shipment && (
-        <div className={`mt-6 p-6 ${surfaceCard}`}>
+        <div className={`mt-6 ${surfaceCardPad}`}>
           <div className="flex items-center gap-2">
             <Package className="size-5 text-blue-600" />
             <h3 className="font-semibold text-slate-900 dark:text-white">{t("orders.cargoSafe")}</h3>
@@ -263,7 +263,7 @@ export default function OrderDetailPage() {
       )}
 
       {canShip && (
-        <form onSubmit={handleShip} className={`mt-6 p-6 ${surfaceCard}`}>
+        <form onSubmit={handleShip} className={`mt-6 ${surfaceCardPad}`}>
           <h3 className="font-semibold text-slate-900 dark:text-white">{t("orders.ship")}</h3>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
@@ -299,7 +299,7 @@ export default function OrderDetailPage() {
       )}
 
       {canConfirm && (
-        <div className={`mt-6 p-6 ${surfaceCard}`}>
+        <div className={`mt-6 ${surfaceCardPad}`}>
           <p className="text-sm text-slate-600 dark:text-slate-400">{t("buy.paramGuvendeHint")}</p>
           <button
             type="button"
@@ -313,7 +313,7 @@ export default function OrderDetailPage() {
       )}
 
       {order.canOpenDispute && (
-        <form onSubmit={handleDispute} className={`mt-6 p-6 ${surfaceCard}`}>
+        <form onSubmit={handleDispute} className={`mt-6 ${surfaceCardPad}`}>
           <h3 className="font-semibold text-slate-900 dark:text-white">{t("orders.dispute")}</h3>
           <label className="mt-3 block text-sm font-medium text-slate-600 dark:text-slate-400">
             {t("orders.disputeReason")}
@@ -337,7 +337,7 @@ export default function OrderDetailPage() {
       )}
 
       {order.canReview && isBuyer && (
-        <form onSubmit={handleReview} className={`mt-6 p-6 ${surfaceCard}`}>
+        <form onSubmit={handleReview} className={`mt-6 ${surfaceCardPad}`}>
           <h3 className="font-semibold text-slate-900 dark:text-white">{t("reviews.writeSeller")}</h3>
           <div className="mt-3">
             <InteractiveStarRating value={rating} onChange={setRating} />
@@ -360,7 +360,7 @@ export default function OrderDetailPage() {
       )}
 
       {order.canReviewAd && isBuyer && (
-        <form onSubmit={handleAdReview} className={`mt-6 p-6 ${surfaceCard}`}>
+        <form onSubmit={handleAdReview} className={`mt-6 ${surfaceCardPad}`}>
           <h3 className="font-semibold text-slate-900 dark:text-white">{t("reviews.writeAd")}</h3>
           <div className="mt-3">
             <InteractiveStarRating value={adRating} onChange={setAdRating} />
@@ -383,7 +383,7 @@ export default function OrderDetailPage() {
       )}
 
       {order.canReviewBuyer && isSeller && (
-        <form onSubmit={handleBuyerReview} className={`mt-6 p-6 ${surfaceCard}`}>
+        <form onSubmit={handleBuyerReview} className={`mt-6 ${surfaceCardPad}`}>
           <h3 className="font-semibold text-slate-900 dark:text-white">{t("reviews.writeBuyer")}</h3>
           <div className="mt-3">
             <InteractiveStarRating value={buyerRating} onChange={setBuyerRating} />

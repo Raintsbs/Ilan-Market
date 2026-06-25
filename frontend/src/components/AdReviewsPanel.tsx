@@ -10,7 +10,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api, ApiError } from "@/lib/api";
 import { formatDate } from "@/lib/status";
-import { surfaceCard } from "@/lib/uiStyles";
+import { surfaceCardPad } from "@/lib/uiStyles";
 import type { AdvertisementRatingSummary } from "@/lib/types";
 
 type AdReviewsPanelProps = {
@@ -81,7 +81,7 @@ export function AdReviewsPanel({ advertisementId, sellerUserId, isOwner }: AdRev
   if (loading && !data) return <LoadingSpinner />;
 
   return (
-    <section id="degerlendirmeler" className={`scroll-mt-24 p-6 ${surfaceCard}`}>
+    <section id="degerlendirmeler" className={`scroll-mt-24 ${surfaceCardPad}`}>
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("reviews.adTitle")}</h2>
       <p className="mt-1 text-sm text-slate-500">{t("reviews.adSubtitle")}</p>
 

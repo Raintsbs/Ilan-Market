@@ -61,7 +61,7 @@ export function ListingDetailsPanel({
           {tableRows.map((row) => (
             <div
               key={row.label}
-              className="grid grid-cols-[minmax(140px,38%)_1fr] gap-3 px-4 py-3 text-sm sm:grid-cols-[200px_1fr]"
+              className="grid grid-cols-1 gap-1 px-4 py-3 text-sm sm:grid-cols-[minmax(140px,38%)_1fr] sm:gap-3 md:grid-cols-[200px_1fr]"
             >
               <dt className="font-medium text-slate-500 dark:text-slate-400">{row.label}</dt>
               <dd className="text-slate-900 dark:text-slate-100">

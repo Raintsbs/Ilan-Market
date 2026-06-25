@@ -9,7 +9,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api } from "@/lib/api";
 import { formFieldClass } from "@/lib/formStyles";
-import { linkBack, pageContainerSm, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainerSm, surfaceCardPad } from "@/lib/uiStyles";
 
 export default function BulkUploadPage() {
   const { t } = useLocale();
@@ -40,7 +40,7 @@ export default function BulkUploadPage() {
     <div className={pageContainerSm}>
       <PageHeader title={t("bulk.title")} subtitle={t("bulk.desc")} />
       <p className="mt-2 text-sm text-slate-500">{t("bulk.format")}</p>
-      <form onSubmit={upload} className={`mt-6 ${surfaceCard} p-6`}>
+      <form onSubmit={upload} className={`mt-6 ${surfaceCardPad}`}>
         <textarea value={csv} onChange={(e) => setCsv(e.target.value)} rows={12} className={formFieldClass} />
         <button type="submit" disabled={uploading} className="mt-4 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
           {uploading ? "…" : t("bulk.upload")}

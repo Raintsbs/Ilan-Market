@@ -58,7 +58,7 @@ export function InteractiveStarRating({ value, onChange, size = "lg" }: Interact
           key={n}
           type="button"
           onClick={() => onChange(n)}
-          className="p-1"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg p-2"
           aria-label={`${n}`}
         >
           <Star

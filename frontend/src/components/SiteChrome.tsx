@@ -5,6 +5,7 @@ import { CompareBar } from "@/components/CompareBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { InstallPwaBanner } from "@/components/InstallPwaBanner";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -24,7 +25,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <InstallPwaBanner />
       <Header />
-      <main className="flex-1 pb-20 sm:pb-8">{children}</main>
+      <main className="flex-1 pb-[calc(5rem+env(safe-area-inset-bottom))] lg:pb-8">{children}</main>
+      <MobileBottomNav />
       <CompareBar />
       <Footer />
       <CookieConsent />

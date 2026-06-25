@@ -15,7 +15,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { api, ApiError } from "@/lib/api";
 import { useAdsChangeListener } from "@/lib/adsSync";
 import type { Advertisement, Category, MyAdCounts, PagedResult } from "@/lib/types";
-import { btnBrand, btnOutline, pageSubtitle, pageTitle } from "@/lib/uiStyles";
+import { btnBrand, btnOutline, gridAds3, pageContainer, pageSubtitle, pageTitle } from "@/lib/uiStyles";
 
 function parseTab(raw: string | null): MyAdsTab {
   if (raw === "pending" || raw === "approved" || raw === "rejected") return raw;
@@ -120,13 +120,13 @@ function MyAdsPageContent() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className={`${pageContainer} max-w-7xl`}>
       <div className="mb-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className={pageTitle}>{t("myAds.title")}</h1>
           <p className={pageSubtitle}>{t("myAds.onlyYours")}</p>
         </div>
-        <div className="flex shrink-0 flex-wrap gap-2">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
           <Link href="/siparisler" className={`${btnOutline} h-10 px-4 py-2.5`}>
             {t("nav.orders")}
           </Link>
@@ -172,7 +172,7 @@ function MyAdsPageContent() {
         <AdGridSkeleton className="mt-8" />
       ) : result && result.items.length > 0 ? (
         <>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`mt-8 ${gridAds3}`}>
             {result.items.map((ad) => (
               <MyAdCard key={ad.id} ad={ad} />
             ))}

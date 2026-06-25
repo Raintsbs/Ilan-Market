@@ -3,10 +3,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f1f5f9;
+  --background: #e8edf3;
   --foreground: #0f172a;
   --surface: #ffffff;
-  --surface-border: #e2e8f0;
+  --panel: #ffffff;
+  --surface-border: #d8e0ea;
+  --surface-muted: #f4f7fa;
   --brand: #2563eb;
   --brand-dark: #1d4ed8;
   --brand-light: #eff6ff;
@@ -36,6 +38,7 @@
   /* shadcn/ui tokens */
   --card: #ffffff;
   --card-foreground: #0f172a;
+  --panel-shadow: 0 4px 24px -4px rgb(15 23 42 / 0.08), 0 0 0 1px rgb(15 23 42 / 0.04);
   --primary: #2563eb;
   --primary-foreground: #ffffff;
   --secondary: #f1f5f9;
@@ -53,8 +56,10 @@
 .dark {
   --background: #0b1120;
   --foreground: #f1f5f9;
-  --surface: #111827;
-  --surface-border: #1e293b;
+  --surface: #141c2e;
+  --panel: #1a2332;
+  --surface-border: #2d3a4f;
+  --surface-muted: #111827;
   --header-bg: rgb(17 24 39 / 0.88);
   color-scheme: dark;
 
@@ -68,8 +73,9 @@
   --ring-offset: #000;
   --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
 
-  --card: #111827;
+  --card: #1a2332;
   --card-foreground: #f1f5f9;
+  --panel-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(148 163 184 / 0.08);
   --primary: #3b82f6;
   --primary-foreground: #ffffff;
   --secondary: #1e293b;
@@ -361,22 +367,76 @@
   box-shadow: 0 4px 14px rgb(37 99 235 / 0.18);
 }
 
+.theme-panel {
+  background: var(--panel);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  box-shadow: var(--panel-shadow);
+}
+
+.theme-card {
+  background: var(--card);
+  border: 1px solid var(--surface-border);
+  border-radius: 1rem;
+  box-shadow: var(--panel-shadow);
+}
+
+.theme-input {
+  height: 2.5rem;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-muted);
+  color: var(--foreground);
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+  font-weight: 400;
+}
+
+.theme-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 0.15);
+  background: var(--surface);
+}
+
+.theme-check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-muted);
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
 /* Açık tema: form elemanlarında net kontrast */
-input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]),
-select,
-textarea {
+:root:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]),
+:root:not(.dark) select,
+:root:not(.dark) textarea {
   color: #0f172a;
   color-scheme: light;
 }
 
-input::placeholder,
-textarea::placeholder {
+:root:not(.dark) input::placeholder,
+:root:not(.dark) textarea::placeholder {
   color: #64748b;
   opacity: 1;
 }
 
-select option,
-select optgroup {
+:root:not(.dark) select option,
+:root:not(.dark) select optgroup {
   color: #0f172a;
   background-color: #ffffff;
 }
@@ -431,6 +491,9 @@ select optgroup {
 
 html {
   transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-text-size-adjust: 100%;
+  width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -438,16 +501,52 @@ body {
   color: var(--foreground);
   font-family: var(--font-plus-jakarta), system-ui, sans-serif;
   overflow-x: clip;
+  width: 100%;
+  min-width: 0;
   -webkit-text-size-adjust: 100%;
 }
 
-/* Mobil: yatay taşmayı önle, güvenli alan */
+/* Mobil: dokunma hedefleri, form zoom önleme, yardımcı sınıflar */
+@media (max-width: 639.98px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .site-header .site-shell {
+    min-height: 3.5rem;
+  }
+}
+
+.mobile-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-input-row {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+}
+
 .safe-bottom {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 .safe-top {
   padding-top: max(0px, env(safe-area-inset-top));
+}
+
+.mobile-bottom-nav {
+  box-shadow: 0 -4px 24px rgb(15 23 42 / 0.08);
+}
+
+.dark .mobile-bottom-nav {
+  box-shadow: 0 -4px 24px rgb(0 0 0 / 0.35);
 }
 
 /* Bootstrap-benzeri responsive tablo → kart (mobil) */
@@ -532,15 +631,15 @@ body {
   }
 }
 .compare-mobile-card {
-  border: 1px solid rgb(226 232 240 / 0.8);
+  border: 1px solid var(--surface-border);
   border-radius: 1rem;
   padding: 1rem;
-  background: white;
+  background: var(--card);
 }
 
 .dark .compare-mobile-card {
-  border-color: rgb(51 65 85 / 0.8);
-  background: rgb(15 23 42);
+  border-color: var(--surface-border);
+  background: var(--card);
 }
 
 .compare-mobile-row {
@@ -560,13 +659,19 @@ body {
   border-bottom: none;
 }
 
+.compare-mobile-row span:last-child {
+  max-width: 60%;
+  word-break: break-word;
+  text-align: right;
+}
+
 .dark .bg-white {
-  background-color: var(--surface);
+  background-color: var(--surface) !important;
 }
 
 .dark .bg-slate-50,
 .dark .bg-slate-50\/50 {
-  background-color: rgb(15 23 42 / 0.6);
+  background-color: var(--surface-muted) !important;
 }
 
 .dark .border-slate-200,
@@ -605,10 +710,11 @@ body {
 
 .dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]),
 .dark select,
-.dark textarea {
-  background-color: rgb(30 41 59);
-  color: #f1f5f9;
-  border-color: #475569;
+.dark textarea,
+.dark .theme-input {
+  background-color: var(--surface-muted);
+  color: var(--foreground);
+  border-color: var(--surface-border);
   color-scheme: dark;
 }
 

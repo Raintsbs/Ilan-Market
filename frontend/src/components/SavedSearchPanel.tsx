@@ -78,20 +78,25 @@ export function SavedSearchPanel({ currentFilter, onApply }: SavedSearchPanelPro
   }
 
   return (
-    <section className={`p-4 ${surfaceElevated}`}>
-      <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">{t("savedSearch.title")}</h2>
-      <div className="mt-3 flex flex-wrap gap-2">
+    <section className={`p-3 sm:p-4 ${surfaceElevated}`}>
+      <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500 sm:text-sm">{t("savedSearch.title")}</h2>
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={t("savedSearch.namePlaceholder")}
-          className="min-w-[10rem] flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900"
+          className="w-full min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900 sm:min-w-[10rem] sm:py-2"
         />
-        <label className="flex items-center gap-1 text-xs text-slate-600">
+        <label className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
           <input type="checkbox" checked={notify} onChange={(e) => setNotify(e.target.checked)} />
           {t("savedSearch.notify")}
         </label>
-        <button type="button" disabled={loading || !name.trim()} onClick={save} className={btnBrandSm}>
+        <button
+          type="button"
+          disabled={loading || !name.trim()}
+          onClick={save}
+          className={`${btnBrandSm} w-full sm:w-auto`}
+        >
           {t("savedSearch.save")}
         </button>
       </div>
@@ -105,7 +110,10 @@ export function SavedSearchPanel({ currentFilter, onApply }: SavedSearchPanelPro
               /* ignore */
             }
             return (
-              <li key={item.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-100 px-3 py-2 text-sm dark:border-slate-800">
+              <li
+                key={item.id}
+                className="flex flex-col gap-2 rounded-lg border border-slate-100 px-3 py-2.5 text-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-800"
+              >
                 <button
                   type="button"
                   onClick={() => onApply(filter)}

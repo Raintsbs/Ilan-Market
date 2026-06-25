@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ThemeLanguageControls } from "@/components/ThemeLanguageControls";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
+import { siteShell } from "@/lib/uiStyles";
 import type { PublicStaticPageListItem } from "@/lib/types";
 
 const CONTACT_EMAIL = "tahatokay2006@gmail.com";
@@ -21,7 +22,7 @@ export function Footer() {
 
   return (
     <footer className="mt-auto border-t border-slate-800 bg-slate-950 text-slate-300">
-      <div className="container mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      <div className={`${siteShell} py-10 sm:py-12`}>
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
             <p className="text-lg font-bold text-white">

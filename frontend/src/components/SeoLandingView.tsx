@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { AdCard } from "@/components/AdCard";
 import { AdGridSkeleton } from "@/components/AdGridSkeleton";
 import { useLocale } from "@/context/LocaleContext";
+import { gridAds, pageContainer } from "@/lib/uiStyles";
 import { api } from "@/lib/api";
-import { pageContainer } from "@/lib/uiStyles";
 import type { Advertisement, SeoLanding } from "@/lib/types";
 import { AdvertisementStatus as AdStatus } from "@/lib/types";
 
@@ -45,15 +45,15 @@ export function SeoLandingView({ landing }: SeoLandingViewProps) {
 
   return (
     <div className={`${pageContainer} py-8`}>
-      <nav className="mb-4 text-sm text-slate-500 dark:text-slate-400">
+      <nav className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500 dark:text-slate-400">
         <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400">
           {t("nav.backHome")}
         </Link>
-        <span className="mx-2">›</span>
+        <span aria-hidden>›</span>
         <span>{landing.cityName}</span>
         {landing.breadcrumbs.map((crumb) => (
-          <span key={crumb.path}>
-            <span className="mx-2">›</span>
+          <span key={crumb.path} className="inline-flex items-center gap-x-2">
+            <span aria-hidden>›</span>
             <Link href={`/${landing.citySlug}/${crumb.path}`} className="hover:text-blue-600">
               {crumb.name}
             </Link>
@@ -77,7 +77,7 @@ export function SeoLandingView({ landing }: SeoLandingViewProps) {
           {t("home.emptyDesc")}
         </p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className={gridAds}>
           {ads.map((ad) => (
             <AdCard key={ad.id} ad={ad} />
           ))}

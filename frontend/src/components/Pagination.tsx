@@ -22,23 +22,23 @@ export function Pagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-3 pt-10">
+    <div className="flex flex-col items-stretch justify-center gap-2 px-1 pt-6 sm:flex-row sm:items-center sm:gap-3 sm:px-0 sm:pt-10">
       <button
         type="button"
         disabled={!hasPrevious}
         onClick={() => onPageChange(page - 1)}
-        className={`${btnOutline} h-10 px-4 disabled:cursor-not-allowed disabled:opacity-40`}
+        className={`${btnOutline} h-10 w-full px-4 sm:w-auto disabled:cursor-not-allowed disabled:opacity-40`}
       >
         {t("pagination.prev")}
       </button>
-      <span className="min-w-[4rem] text-center text-sm font-medium tabular-nums text-slate-600 dark:text-slate-400">
+      <span className="order-first py-1 text-center text-sm font-medium tabular-nums text-slate-600 sm:order-none sm:min-w-[4rem] dark:text-slate-400">
         {page} / {totalPages}
       </span>
       <button
         type="button"
         disabled={!hasNext}
         onClick={() => onPageChange(page + 1)}
-        className={`${btnOutline} h-10 px-4 disabled:cursor-not-allowed disabled:opacity-40`}
+        className={`${btnOutline} h-10 w-full px-4 sm:w-auto disabled:cursor-not-allowed disabled:opacity-40`}
       >
         {t("pagination.next")}
       </button>

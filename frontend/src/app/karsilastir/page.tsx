@@ -132,7 +132,7 @@ function CompareContent() {
       ) : (
         <>
           {/* Mobil: kart görünümü */}
-          <div className="mt-8 space-y-4 d-md-none">
+          <div className="mt-8 space-y-4 md:hidden">
             {ads.map((ad) => {
               const img = ad.imagePath ? getImageUrl(ad.imagePath) : null;
               return (
@@ -160,7 +160,7 @@ function CompareContent() {
           </div>
 
           {/* Masaüstü: tablo */}
-          <div className={`mt-8 overflow-x-auto d-none d-md-block ${surfaceCard}`}>
+          <div className={`mt-8 hidden overflow-x-auto md:block ${surfaceCard}`}>
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-700">

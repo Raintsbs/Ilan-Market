@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
-import { linkBack, pageContainerSm, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainerSm, surfaceCardPad } from "@/lib/uiStyles";
 import type { MarketplaceOrder, SellerEarnings } from "@/lib/types";
 
 export default function EarningsPage() {
@@ -43,7 +43,7 @@ export default function EarningsPage() {
   return (
     <div className={pageContainerSm}>
       <PageHeader title={t("earnings.title")} subtitle={t("earnings.desc")} />
-      <dl className={`mt-6 grid gap-4 sm:grid-cols-2 ${surfaceCard} p-6`}>
+      <dl className={`mt-6 grid gap-4 sm:grid-cols-2 ${surfaceCardPad}`}>
         <div>
           <dt className="text-sm text-slate-500">{t("earnings.total")}</dt>
           <dd className="text-2xl font-bold">{fmt(data.totalCompletedAmount)}</dd>
@@ -62,7 +62,7 @@ export default function EarningsPage() {
         </div>
       </dl>
       {orders.length > 0 && (
-        <div className={`mt-6 ${surfaceCard} p-6`}>
+        <div className={`mt-6 ${surfaceCardPad}`}>
           <h2 className="text-sm font-semibold text-slate-900 dark:text-white">{t("earnings.payoutPending")}</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {pendingOrders.map((o) => (

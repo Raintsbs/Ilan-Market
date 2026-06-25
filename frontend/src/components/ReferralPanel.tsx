@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api } from "@/lib/api";
-import { surfaceCard } from "@/lib/uiStyles";
+import { surfaceCardPad } from "@/lib/uiStyles";
 import type { ReferralStats } from "@/lib/types";
 
 export function ReferralPanel() {
@@ -24,7 +24,7 @@ export function ReferralPanel() {
 
   if (loading) {
     return (
-      <section className={`mt-8 p-6 ${surfaceCard}`}>
+      <section className={`mt-8 ${surfaceCardPad}`}>
         <p className="text-sm text-slate-500">…</p>
       </section>
     );
@@ -38,7 +38,7 @@ export function ReferralPanel() {
   }
 
   return (
-    <section className={`mt-8 p-6 ${surfaceCard}`}>
+    <section className={`mt-8 ${surfaceCardPad}`}>
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("referral.title")}</h2>
       <p className="mt-1 text-sm text-slate-500">{t("referral.subtitle")}</p>
       <dl className="mt-4 space-y-2 text-sm">

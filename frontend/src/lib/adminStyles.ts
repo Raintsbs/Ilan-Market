@@ -5,10 +5,10 @@ export const adminPage = "mx-auto max-w-7xl";
 export const adminCard =
   "rounded-2xl border border-white/[0.08] bg-white/[0.03] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]";
 
-export const adminCardPad = `${adminCard} p-6`;
+export const adminCardPad = `${adminCard} p-4 sm:p-6`;
 
 export const adminInput =
-  "h-10 min-w-[10rem] rounded-xl border border-white/10 bg-white/[0.04] px-3.5 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500/40 focus:ring-2 focus:ring-blue-500/15";
+  "h-10 w-full min-w-0 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500/40 focus:ring-2 focus:ring-blue-500/15 sm:w-auto sm:min-w-[10rem]";
 
 export const adminSelect = adminInput;
 
@@ -60,15 +60,15 @@ export const adminModalOverlay =
   "fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm";
 
 export const adminModalPanel =
-  "max-h-[90vh] w-full overflow-auto rounded-2xl border border-white/10 bg-[#121a2e] p-6 shadow-2xl";
+  "max-h-[90vh] w-full overflow-auto rounded-2xl border border-white/10 bg-[#121a2e] p-4 shadow-2xl sm:p-6";
 
 export const adminListItem = `${adminCard} flex items-center justify-between px-4 py-3`;
 
 export const adminBtnChip =
-  "rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs font-medium text-slate-200 transition hover:bg-white/[0.08]";
+  "inline-flex min-h-10 items-center rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium text-slate-200 transition hover:bg-white/[0.08]";
 
 export const adminBtnChipDanger =
-  "rounded-lg border border-rose-500/20 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300 transition hover:bg-rose-500/20";
+  "inline-flex min-h-10 items-center rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs font-medium text-rose-300 transition hover:bg-rose-500/20";
 
 export const adminPaginationBtn =
   "rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm text-slate-300 transition hover:bg-white/[0.08] disabled:opacity-40";

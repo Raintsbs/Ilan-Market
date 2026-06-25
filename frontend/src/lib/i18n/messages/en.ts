@@ -519,6 +519,7 @@ export const en: Record<MessageKey, string> = {
   "filter.minPrice": "Min price",
   "filter.maxPrice": "Max price",
   "filter.featuredOnly": "Featured only",
+  "filter.moreFilters": "Price & more filters",
   "messages.title": "My messages",
   "messages.empty": "No messages yet.",
   "messages.newToSeller": "Write your first message to the seller",

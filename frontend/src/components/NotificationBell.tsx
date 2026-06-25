@@ -85,7 +85,7 @@ export function NotificationBell() {
         onClick={() => setOpen((o) => !o)}
         aria-label={t("notifications.title")}
         aria-expanded={open}
-        className="relative rounded-xl p-2 text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+        className="relative inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
       >
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path
@@ -107,7 +107,7 @@ export function NotificationBell() {
       </button>
 
       {open && (
-        <div className="animate-dropdown-in absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+        <div className="animate-dropdown-in absolute right-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-1.5rem))] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900 sm:w-80">
           <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
             <span className="text-sm font-semibold text-slate-900 dark:text-white">{t("notifications.title")}</span>
             <Link

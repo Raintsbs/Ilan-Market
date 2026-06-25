@@ -6,6 +6,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api, ApiError } from "@/lib/api";
 import { formFieldClass } from "@/lib/formStyles";
+import { surfaceCardPad } from "@/lib/uiStyles";
 import { getImageUrl } from "@/lib/image";
 import { SafeImage } from "./SafeImage";
 
@@ -165,7 +166,7 @@ export function AccountSettings() {
 
   return (
     <div className="mt-8 space-y-6">
-      <section id="profile-photo" className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <section id="profile-photo" className={`${surfaceCardPad} shadow-sm`}>
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t("account.profilePhoto")}</h3>
         <div className="mt-4 flex flex-wrap items-center gap-4">
           <label className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-2xl bg-slate-100">
@@ -215,11 +216,11 @@ export function AccountSettings() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <section className={`${surfaceCardPad} shadow-sm`}>
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t("account.personalInfo")}</h3>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("account.personalHint")}</p>
         <form onSubmit={handleProfileSave} className="mt-4 space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("auth.firstName")}</label>
               <input
@@ -264,7 +265,7 @@ export function AccountSettings() {
         </form>
       </section>
 
-      <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <section className={`${surfaceCardPad} shadow-sm`}>
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t("phone.verifyTitle")}</h3>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("phone.verifyHint")}</p>
         {user?.phoneVerified ? (
@@ -275,20 +276,20 @@ export function AccountSettings() {
           <form onSubmit={handleVerifyPhone} className="mt-4 space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("phone.number")}</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 <input
                   required
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="05xx xxx xx xx"
-                  className={`min-w-[200px] flex-1 ${formFieldClass}`}
+                  className={`min-w-0 w-full flex-1 sm:min-w-[12rem] ${formFieldClass}`}
                 />
                 <button
                   type="button"
                   disabled={sendingCode || !phoneNumber.trim()}
                   onClick={handleSendPhoneCode}
-                  className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60 dark:border-slate-600 dark:text-slate-200"
+                  className="min-h-10 w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60 sm:w-auto dark:border-slate-600 dark:text-slate-200"
                 >
                   {sendingCode ? "…" : t("phone.sendCode")}
                 </button>
@@ -320,7 +321,7 @@ export function AccountSettings() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <section className={`${surfaceCardPad} shadow-sm`}>
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t("account.changePassword")}</h3>
         <form onSubmit={handlePasswordSave} className="mt-4 space-y-4">
           <div>
@@ -333,7 +334,7 @@ export function AccountSettings() {
               className={formFieldClass}
             />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("account.newPassword")}</label>
               <input

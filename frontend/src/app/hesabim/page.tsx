@@ -158,7 +158,7 @@ export default function AccountPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 border-b border-slate-100 p-4 dark:border-slate-800">
+        <div className="grid grid-cols-1 gap-3 border-b border-slate-100 p-4 sm:grid-cols-2 dark:border-slate-800">
           <StatCard label={t("account.statAds")} value={adCount} delay="0ms" />
           <StatCard label={t("account.statViews")} value={totalViews} delay="100ms" />
         </div>

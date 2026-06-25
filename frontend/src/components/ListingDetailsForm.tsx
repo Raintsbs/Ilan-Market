@@ -58,7 +58,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
 
       <section>
         <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("listing.priceLocation")}</h3>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("listing.price")} *</label>
             <input
@@ -114,7 +114,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
 
       <section>
         <h3 className="text-base font-semibold text-slate-900">{profile.productSectionTitle}</h3>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">
               {t("listing.brand")} {brandRequired ? "*" : ""}
@@ -211,7 +211,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showComputer && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Bilgisayar özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.storage")} value={value.storage} onChange={(v) => set("storage", v)} placeholder="512 GB SSD" />
             <Field label={t("row.ram")} value={value.memory} onChange={(v) => set("memory", v)} placeholder="16 GB" />
             <Field label={t("row.processor")} value={value.processor} onChange={(v) => set("processor", v)} placeholder="Intel i7 / Ryzen 7" />
@@ -225,7 +225,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
           <h3 className="text-base font-semibold text-slate-900">
             {profile.showPhone ? "Telefon özellikleri" : "Tablet özellikleri"}
           </h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Depolama" value={value.storage} onChange={(v) => set("storage", v)} placeholder="128 GB" />
             <Field label="Ekran boyutu" value={value.screenSize} onChange={(v) => set("screenSize", v)} placeholder='6.7"' />
             {profile.showPhone && (
@@ -243,7 +243,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showCoffee && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Kahve makinesi özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("row.coffeeType")}</label>
               <select
@@ -284,7 +284,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showTv && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Televizyon özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Ekran boyutu" value={value.screenSize} onChange={(v) => set("screenSize", v)} placeholder='55"' />
             <Field label={t("row.resolution")} value={value.storage} onChange={(v) => set("storage", v)} placeholder="4K UHD" />
           </div>
@@ -294,7 +294,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showGaming && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Konsol / oyun özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Depolama" value={value.storage} onChange={(v) => set("storage", v)} placeholder="825 GB" />
             <Field label="Paket içeriği" value={value.memory} onChange={(v) => set("memory", v)} placeholder="2 kol, oyun dahil" />
           </div>
@@ -304,7 +304,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showJob && (
         <section>
           <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("row.employmentType")}</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.salary") + " (min)"} value={value.salaryMin} onChange={(v) => set("salaryMin", v)} placeholder="25.000 TL" />
             <Field label={t("row.salary") + " (max)"} value={value.salaryMax} onChange={(v) => set("salaryMax", v)} placeholder="40.000 TL" />
             <div>
@@ -341,7 +341,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showService && (
         <section>
           <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("row.serviceType")}</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.serviceType")} value={value.serviceType} onChange={(v) => set("serviceType", v)} placeholder="Tadilat, nakliye..." />
             <Field label={t("row.serviceArea")} value={value.serviceArea} onChange={(v) => set("serviceArea", v)} placeholder="İstanbul Avrupa" />
             <div className="sm:col-span-2">
@@ -360,7 +360,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showVehicle && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Araç özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.mileage")} value={value.mileage} onChange={(v) => set("mileage", v)} placeholder="125.000 km" />
             <div>
               <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("row.fuel")}</label>
@@ -416,7 +416,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showEstate && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Konut özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.rooms")} value={value.roomCount} onChange={(v) => set("roomCount", v)} placeholder="3+1" />
             <Field label={t("row.sqm")} value={value.squareMeters} onChange={(v) => set("squareMeters", v)} />
             <Field label={t("row.buildingAge")} value={value.buildingAge} onChange={(v) => set("buildingAge", v)} />
@@ -452,7 +452,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
         <section>
           <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("media.sectionTitle")}</h3>
           <p className="mt-1 text-sm text-slate-500">{t("media.sectionHint")}</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field
               label={t("row.video")}
               value={value.videoUrl}
@@ -472,7 +472,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showAppliance && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Ev aleti özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Kapasite" value={value.capacity} onChange={(v) => set("capacity", v)} placeholder="9 kg" />
             <Field label="Güç (W)" value={value.powerWatts} onChange={(v) => set("powerWatts", v)} />
             <Field label="Enerji sınıfı" value={value.storage} onChange={(v) => set("storage", v)} placeholder="A++" />
@@ -483,7 +483,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showFurniture && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Mobilya özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("row.material")} value={value.material} onChange={(v) => set("material", v)} placeholder="Ahşap, kumaş" />
             <Field label={t("row.size")} value={value.size} onChange={(v) => set("size", v)} placeholder="200x90 cm" />
           </div>
@@ -493,7 +493,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.showClothing && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Giyim özellikleri</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Beden" value={value.size} onChange={(v) => set("size", v)} placeholder="M, 42, 38" />
             <Field label="Malzeme" value={value.material} onChange={(v) => set("material", v)} />
           </div>
@@ -504,7 +504,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
         <section>
           <h3 className="text-base font-semibold text-slate-900">Ek bilgiler</h3>
           <p className="mt-1 text-sm text-slate-500">İsteğe bağlı teknik detaylar</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Depolama / kapasite" value={value.storage} onChange={(v) => set("storage", v)} />
             <Field label="Ek özellik" value={value.processor} onChange={(v) => set("processor", v)} />
           </div>
@@ -514,7 +514,7 @@ export function ListingDetailsForm({ value, onChange, categoryName, categoryPath
       {profile.kind === "other" && (
         <section>
           <h3 className="text-base font-semibold text-slate-900">Ek özellikler</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Ek bilgi 1" value={value.storage} onChange={(v) => set("storage", v)} />
             <Field label="Ek bilgi 2" value={value.processor} onChange={(v) => set("processor", v)} />
           </div>

@@ -8,7 +8,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useAuth } from "@/context/AuthContext";
 import { PageHeader } from "@/components/PageHeader";
 import { useLocale } from "@/context/LocaleContext";
-import { linkBack, pageContainer, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainer, surfaceCardPad } from "@/lib/uiStyles";
 
 export default function NewAdPage() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function NewAdPage() {
         ← {t("newAd.back")}
       </Link>
       <PageHeader title={t("newAd.title")} subtitle={t("newAd.subtitle")} className="mt-4" />
-      <div className={`mt-8 p-6 sm:p-8 ${surfaceCard}`}>
+      <div className={`mt-8 ${surfaceCardPad} md:p-8`}>
         <AdForm
           onSuccess={(id, message) => {
             if (id > 0) {

@@ -44,7 +44,7 @@ export default function BlogDetailPage() {
       <Link href="/blog" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
         ← {t("blog.back")}
       </Link>
-      <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-white">{post.title}</h1>
+      <h1 className="mt-4 text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">{post.title}</h1>
       <p className="mt-2 text-sm text-slate-500">
         {formatDate(post.publishedTime ?? post.createdTime, locale)}
       </p>

@@ -6,7 +6,7 @@ import { AdCard } from "@/components/AdCard";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
 import { getRecentlyViewed } from "@/lib/recentlyViewed";
-import { linkBack } from "@/lib/uiStyles";
+import { gridAds, linkBack } from "@/lib/uiStyles";
 import type { Advertisement } from "@/lib/types";
 
 export function RecentlyViewedSection({ compact = false }: { compact?: boolean }) {
@@ -45,7 +45,7 @@ export function RecentlyViewedSection({ compact = false }: { compact?: boolean }
           </Link>
         )}
       </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className={gridAds}>
         {ads.map((ad) => (
           <AdCard key={ad.id} ad={ad} />
         ))}

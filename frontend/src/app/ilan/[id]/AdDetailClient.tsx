@@ -30,7 +30,7 @@ import { useAdsChangeListener } from "@/lib/adsSync";
 import { getAdvertisementImageUrls } from "@/lib/image";
 import { parseListingDetails } from "@/lib/listingDetails";
 import { formatDate } from "@/lib/status";
-import { btnBrand, linkBack, surfaceElevated } from "@/lib/uiStyles";
+import { btnBrand, linkBack, siteShell, surfaceElevated } from "@/lib/uiStyles";
 import type { Advertisement } from "@/lib/types";
 
 type AdDetailClientProps = {
@@ -112,8 +112,8 @@ export function AdDetailClient({ id }: AdDetailClientProps) {
   }
 
   return (
-    <article className="container mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-500">
+    <article className={`${siteShell} max-w-6xl py-5 sm:py-6 md:py-8`}>
+      <div className="mb-3 flex flex-col gap-1 text-sm text-slate-500 sm:mb-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
         <Link href="/" className={linkBack}>
           ← {t("nav.backAds")}
         </Link>
@@ -132,7 +132,7 @@ export function AdDetailClient({ id }: AdDetailClientProps) {
             />
           </div>
 
-          <aside className="flex flex-col gap-4 p-6 lg:p-8">
+          <aside className="flex flex-col gap-4 border-t border-slate-100 p-4 sm:p-6 lg:border-t-0 lg:p-8 dark:border-slate-800">
             <div className="flex items-start justify-between gap-2">
               <span className="text-sm font-semibold text-blue-600">{ad.categoryName}</span>
               <StatusBadge status={ad.status} isActive={ad.isActive} />
@@ -198,7 +198,7 @@ export function AdDetailClient({ id }: AdDetailClientProps) {
           </aside>
         </div>
 
-        <div className="space-y-6 border-t border-slate-100 p-6 sm:p-8 dark:border-slate-800">
+        <div className="space-y-6 border-t border-slate-100 p-4 sm:p-6 md:p-8 dark:border-slate-800">
           {(ad.auction || ad.listingType === 2) && (
             <AuctionPanel
               advertisementId={ad.id}

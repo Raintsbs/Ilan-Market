@@ -194,7 +194,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="absolute right-3 top-4 rounded-lg p-2 text-slate-400 hover:bg-white/10"
+              className="absolute right-2 top-3 inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg p-2 text-slate-400 hover:bg-white/10"
             >
               <X className="size-5" />
             </button>
@@ -208,7 +208,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
-            className="rounded-lg p-2 text-slate-400 hover:bg-white/[0.06] lg:hidden"
+            className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg p-2 text-slate-400 hover:bg-white/[0.06] lg:hidden"
             aria-label="Menü"
           >
             <Menu className="size-5" />

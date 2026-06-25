@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { useLocale } from "@/context/LocaleContext";
 import { api } from "@/lib/api";
 import { clearRecentlyViewed, getRecentlyViewed } from "@/lib/recentlyViewed";
-import { btnOutline, linkBack, pageContainerMd } from "@/lib/uiStyles";
+import { btnOutline, gridAds3, linkBack, pageContainerMd } from "@/lib/uiStyles";
 import type { Advertisement } from "@/lib/types";
 
 export default function RecentlyViewedPage() {
@@ -58,7 +58,7 @@ export default function RecentlyViewedPage() {
       {ads.length === 0 ? (
         <p className="mt-12 text-center text-slate-500">{t("recent.empty")}</p>
       ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-8 ${gridAds3}`}>
           {ads.map((ad) => (
             <AdCard key={ad.id} ad={ad} />
           ))}

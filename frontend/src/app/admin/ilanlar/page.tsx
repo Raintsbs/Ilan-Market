@@ -283,7 +283,7 @@ export default function AdminAdsPage() {
       </div>
 
       {data && (
-        <div className="mt-6 flex items-center gap-3 text-sm text-slate-400">
+        <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-400">
           <button type="button" disabled={!data.hasPrevious} onClick={() => setPage((p) => p - 1)} className={adminPaginationBtn}>
             Önceki
           </button>

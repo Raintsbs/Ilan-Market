@@ -39,18 +39,18 @@ export default function OrdersPage() {
   return (
     <div className={pageContainerMd}>
       <PageHeader title={t("orders.title")} />
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
         <button
           type="button"
           onClick={() => setTab("buyer")}
-          className={`rounded-lg px-4 py-2 text-sm font-semibold ${tab === "buyer" ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300"}`}
+          className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold sm:flex-none ${tab === "buyer" ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300"}`}
         >
           {t("orders.asBuyer")}
         </button>
         <button
           type="button"
           onClick={() => setTab("seller")}
-          className={`rounded-lg px-4 py-2 text-sm font-semibold ${tab === "seller" ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300"}`}
+          className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold sm:flex-none ${tab === "seller" ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300"}`}
         >
           {t("orders.asSeller")}
         </button>

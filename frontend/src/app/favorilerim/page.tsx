@@ -12,7 +12,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { api, ApiError } from "@/lib/api";
 import { useAdsChangeListener } from "@/lib/adsSync";
 import { PageHeader } from "@/components/PageHeader";
-import { alertWarning, pageContainer } from "@/lib/uiStyles";
+import { alertWarning, gridAds3, pageContainer } from "@/lib/uiStyles";
 import type { Advertisement } from "@/lib/types";
 
 export default function FavoritesPage() {
@@ -69,7 +69,7 @@ export default function FavoritesPage() {
           {error}
         </div>
       ) : items.length > 0 ? (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-8 ${gridAds3}`}>
           {items.map((ad) => (
             <div key={ad.id}>
               <AdCard ad={ad} />

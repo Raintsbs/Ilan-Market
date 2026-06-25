@@ -28,13 +28,13 @@ export default function AdminCouponsPage() {
         <input type="number" placeholder="TL indirim" value={form.discountAmount ?? 0} onChange={(e) => setForm({ ...form, discountAmount: Number(e.target.value) })} className={adminInput} />
         <input type="number" placeholder="%" value={form.discountPercent ?? ""} onChange={(e) => setForm({ ...form, discountPercent: Number(e.target.value) || undefined })} className={adminInput} />
         <input type="number" placeholder="Max kullanım" value={form.maxUses ?? 100} onChange={(e) => setForm({ ...form, maxUses: Number(e.target.value) })} className={adminInput} />
-        <button type="submit" className={adminBtnPrimary}>Kaydet</button>
+        <button type="submit" className={`${adminBtnPrimary} w-full sm:w-auto sm:col-span-2`}>Kaydet</button>
       </form>
       <div className="mt-6 space-y-2">
         {items.map((c) => (
-          <div key={c.id} className={`flex justify-between ${adminCardPad}`}>
-            <span className="font-mono text-white">{c.code}</span>
-            <span className="text-slate-400">{c.usedCount}/{c.maxUses} · {c.discountAmount} TL</span>
+          <div key={c.id} className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between ${adminCardPad}`}>
+            <span className="font-mono text-white break-all">{c.code}</span>
+            <span className="text-sm text-slate-400 sm:text-right">{c.usedCount}/{c.maxUses} · {c.discountAmount} TL</span>
           </div>
         ))}
       </div>

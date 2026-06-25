@@ -361,7 +361,7 @@ export function AdForm({ initial, onSuccess }: AdFormProps) {
         </div>
       )}
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
         <div className="sm:col-span-2">
           <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">{t("form.category")} *</label>
           <CategoryTreePicker
@@ -451,7 +451,7 @@ export function AdForm({ initial, onSuccess }: AdFormProps) {
                   <button
                     type="button"
                     onClick={() => removeKeptPath(i)}
-                    className="absolute right-1 top-1 rounded bg-rose-600 px-1.5 text-xs text-white"
+                    className="absolute right-1 top-1 inline-flex h-8 w-8 items-center justify-center rounded bg-rose-600 text-sm text-white"
                     title={t("form.removeImage")}
                   >
                     ×
@@ -467,7 +467,7 @@ export function AdForm({ initial, onSuccess }: AdFormProps) {
                   <button
                     type="button"
                     onClick={() => removeImage(i)}
-                    className="absolute right-1 top-1 rounded bg-rose-600 px-1.5 text-xs text-white"
+                    className="absolute right-1 top-1 inline-flex h-8 w-8 items-center justify-center rounded bg-rose-600 text-sm text-white"
                   >
                     ×
                   </button>

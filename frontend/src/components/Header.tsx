@@ -12,7 +12,7 @@ import {
   desktopSecondaryNavLinks,
   getVisibleNavLinks,
 } from "@/lib/nav";
-import { btnBrandSm, btnOutline } from "@/lib/uiStyles";
+import { btnBrandSm, btnOutline, siteShell } from "@/lib/uiStyles";
 
 function isActive(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/";
@@ -47,7 +47,7 @@ export function Header() {
 
   return (
     <header className="site-header sticky top-0 z-50 border-b border-slate-200/80 shadow-sm shadow-slate-900/5 dark:border-slate-800 dark:shadow-black/20">
-      <div className="container flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+      <div className={`site-shell flex h-14 items-center gap-2 sm:gap-3 ${siteShell}`}>
         <Link href="/" className="flex shrink-0 items-center gap-2.5 pr-1">
           <LogoMark />
           <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white sm:text-lg">
@@ -113,7 +113,7 @@ export function Header() {
             aria-label={t("nav.menu")}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((o) => !o)}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 xl:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 xl:hidden"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {menuOpen ? (
@@ -127,7 +127,14 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="border-t border-slate-100 bg-white/95 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 xl:hidden">
+        <>
+          <button
+            type="button"
+            aria-label={t("nav.menu")}
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] xl:hidden"
+            onClick={() => setMenuOpen(false)}
+          />
+          <nav className="fixed inset-x-0 top-14 z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-100 bg-white/98 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/98 xl:hidden">
           <div className="flex flex-col gap-0.5">
             {navLinks.map((link) => (
               <Link
@@ -190,6 +197,7 @@ export function Header() {
             )}
           </div>
         </nav>
+        </>
       )}
     </header>
   );

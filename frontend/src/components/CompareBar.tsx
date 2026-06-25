@@ -21,7 +21,7 @@ export function CompareBar() {
   if (ids.length === 0) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-40 w-[min(100%-2rem,28rem)] -translate-x-1/2 safe-bottom rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
+    <div className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] left-1/2 z-40 w-[min(100%-2rem,28rem)] -translate-x-1/2 safe-bottom rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95 lg:bottom-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
           {t("compare.bar", { count: ids.length })}
@@ -33,7 +33,7 @@ export function CompareBar() {
           <button
             type="button"
             onClick={clearCompare}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
             aria-label={t("compare.clear")}
           >
             <X className="size-4" />
@@ -47,8 +47,13 @@ export function CompareBar() {
             className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-1 text-xs font-medium dark:bg-slate-800"
           >
             #{id}
-            <button type="button" onClick={() => removeFromCompare(id)} aria-label="Remove">
-              <X className="size-3" />
+            <button
+              type="button"
+              onClick={() => removeFromCompare(id)}
+              className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-md"
+              aria-label="Remove"
+            >
+              <X className="size-4" />
             </button>
           </span>
         ))}

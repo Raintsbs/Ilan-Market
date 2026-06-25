@@ -7,7 +7,7 @@ import { useToast } from "@/context/ToastContext";
 import { api, ApiError } from "@/lib/api";
 import { formFieldClass } from "@/lib/formStyles";
 import { formatDate } from "@/lib/status";
-import { surfaceCard } from "@/lib/uiStyles";
+import { surfaceCardPad } from "@/lib/uiStyles";
 import type { ListingQuestion } from "@/lib/types";
 
 type Props = {
@@ -64,7 +64,7 @@ export function ListingQaPanel({ advertisementId, isOwner }: Props) {
   }
 
   return (
-    <section id="sorular" className={`scroll-mt-24 p-6 ${surfaceCard}`}>
+    <section id="sorular" className={`scroll-mt-24 ${surfaceCardPad}`}>
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("qa.title")}</h2>
 
       {!loading && items.length === 0 && (

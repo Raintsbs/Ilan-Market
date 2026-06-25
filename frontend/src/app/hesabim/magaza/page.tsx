@@ -10,7 +10,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { useToast } from "@/context/ToastContext";
 import { api } from "@/lib/api";
 import { formFieldClass } from "@/lib/formStyles";
-import { linkBack, pageContainerSm, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainerSm, surfaceCardPad } from "@/lib/uiStyles";
 
 export default function StoreSettingsPage() {
   const { t } = useLocale();
@@ -56,7 +56,7 @@ export default function StoreSettingsPage() {
   return (
     <div className={pageContainerSm}>
       <PageHeader title={t("store.settings")} subtitle={t("store.settingsDesc")} />
-      <form onSubmit={save} className={`mt-6 space-y-4 p-6 ${surfaceCard}`}>
+      <form onSubmit={save} className={`mt-6 space-y-4 ${surfaceCardPad}`}>
         <div>
           <label className="text-sm font-medium">{t("store.slug")}</label>
           <input value={storeSlug} onChange={(e) => setStoreSlug(e.target.value)} className={`mt-1 ${formFieldClass}`} placeholder="magaza-adi" />

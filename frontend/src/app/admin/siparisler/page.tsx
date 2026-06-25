@@ -102,8 +102,8 @@ export default function AdminOrdersPage() {
         subtitle="Tüm siparişleri filtreleyin, iade ve satıcı ödemelerini yönetin"
       />
 
-      <div className="mb-6 flex flex-wrap items-end gap-3">
-        <label className="block text-sm text-slate-400">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+        <label className="block w-full min-w-0 text-sm text-slate-400 sm:w-auto sm:flex-1">
           Durum
           <select
             value={status}
@@ -112,7 +112,7 @@ export default function AdminOrdersPage() {
               setStatus(e.target.value);
               setDisputedOnly(false);
             }}
-            className={`${adminInputFull} mt-1 min-w-[180px]`}
+            className={`${adminInputFull} mt-1`}
           >
             {STATUS_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -121,13 +121,13 @@ export default function AdminOrdersPage() {
             ))}
           </select>
         </label>
-        <label className="block text-sm text-slate-400">
+        <label className="block w-full min-w-0 text-sm text-slate-400 sm:w-auto sm:flex-1">
           Ara (sipariş # veya ilan)
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && (setPage(1), load())}
-            className={`${adminInputFull} mt-1 min-w-[200px]`}
+            className={`${adminInputFull} mt-1`}
             placeholder="#123 veya başlık"
           />
         </label>

@@ -215,7 +215,7 @@ export function CategoryTreePicker({
         {open && (
           <>
             <button type="button" className="fixed inset-0 z-40" aria-label="close" onClick={() => setOpen(false)} />
-            <div className="absolute left-0 z-50 mt-1 w-[min(100vw-2rem,42rem)] shadow-xl">{columns}</div>
+            <div className="absolute left-0 z-50 mt-1 w-full max-w-[min(100vw-1.5rem,42rem)] shadow-xl sm:w-[min(100vw-2rem,42rem)]">{columns}</div>
           </>
         )}
         {value && (

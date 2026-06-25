@@ -91,14 +91,20 @@ export default function ThreadPage() {
           </div>
         ))}
       </div>
-      <div className="mt-4 flex gap-2">
+      <div className="mobile-input-row mt-4">
         <input
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          className={`flex-1 ${formFieldClass}`}
+          className={`min-w-0 flex-1 ${formFieldClass}`}
           placeholder={t("messages.placeholder")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              void send();
+            }
+          }}
         />
-        <button type="button" onClick={send} className={btnBrandSm}>
+        <button type="button" onClick={send} className={`${btnBrandSm} shrink-0 sm:px-6`}>
           {t("messages.send")}
         </button>
       </div>

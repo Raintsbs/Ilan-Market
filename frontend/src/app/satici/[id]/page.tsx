@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
 import { formatDate } from "@/lib/status";
 import { PageHeader } from "@/components/PageHeader";
-import { linkBack, pageContainerMd, surfaceCard } from "@/lib/uiStyles";
+import { linkBack, pageContainerMd, surfaceCardPad } from "@/lib/uiStyles";
 import type { Advertisement, SellerAnalytics, SellerProfile } from "@/lib/types";
 
 export default function SellerProfilePage() {
@@ -55,7 +55,7 @@ export default function SellerProfilePage() {
   return (
     <div className={pageContainerMd}>
       <PageHeader title={t("seller.title")} />
-      <div className={`mt-6 p-6 ${surfaceCard}`}>
+      <div className={`mt-6 ${surfaceCardPad}`}>
         <div className="flex items-center gap-2">
           <p className="text-xl font-semibold text-slate-900 dark:text-white">{profile.displayName}</p>
           {profile.isVerified && <VerifiedBadge />}
@@ -86,7 +86,7 @@ export default function SellerProfilePage() {
         </dl>
       </div>
 
-      <div className={`mt-8 p-6 ${surfaceCard}`}>
+      <div className={`mt-8 ${surfaceCardPad}`}>
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("reviews.title")}</h2>
         <div className="mt-4">
           <SellerRatingBlock sellerUserId={userId} completedOrderCount={profile.completedOrderCount} showComposer />
@@ -94,9 +94,9 @@ export default function SellerProfilePage() {
       </div>
 
       {analytics && (
-        <div className={`mt-8 p-6 ${surfaceCard}`}>
+        <div className={`mt-8 ${surfaceCardPad}`}>
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{t("seller.statsTitle")}</h2>
-          <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <dl className="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-slate-500">{t("seller.totalOffers")}</dt>
               <dd className="text-xl font-bold">{analytics.totalOffers}</dd>

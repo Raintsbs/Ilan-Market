@@ -69,7 +69,7 @@ export function TramerQueryPanel({
           value={plate}
           onChange={(e) => setPlate(e.target.value.toUpperCase())}
           placeholder="34 ABC 123"
-          className={`${inputClass} min-w-[10rem] flex-1`}
+          className={`${inputClass} min-w-0 w-full flex-1 sm:min-w-[10rem]`}
         />
         <button type="button" disabled={loading || !plate.trim()} onClick={() => runQuery(false)} className={btnBrand}>
           {loading ? "..." : t("tramer.query")}

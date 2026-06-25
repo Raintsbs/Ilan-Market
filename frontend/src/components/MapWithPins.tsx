@@ -69,7 +69,7 @@ export function MapWithPins({ items }: MapWithPinsProps) {
 
   if (items.length === 0) {
     return (
-      <p className="flex min-h-[400px] items-center justify-center rounded-2xl border border-slate-200 text-slate-500 dark:border-slate-700">
+      <p className="flex min-h-[50vh] items-center justify-center rounded-2xl border border-slate-200 text-slate-500 sm:min-h-[400px] dark:border-slate-700">
         {t("map.noCoords")}
       </p>
     );
@@ -79,9 +79,9 @@ export function MapWithPins({ items }: MapWithPinsProps) {
     <div className="grid gap-6 lg:grid-cols-2">
       <div
         ref={mapRef}
-        className="min-h-[400px] overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700"
+        className="min-h-[50vh] overflow-hidden rounded-2xl border border-slate-200 sm:min-h-[400px] dark:border-slate-700"
       />
-      <ul className="max-h-[500px] space-y-2 overflow-y-auto">
+      <ul className="max-h-[min(50vh,500px)] space-y-2 overflow-y-auto lg:max-h-[500px]">
         {items.map((item) => (
           <li key={item.id}>
             <Link
