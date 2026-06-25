@@ -98,11 +98,11 @@ export function Header() {
             <>
               <Link
                 href="/giris"
-                className="hidden h-9 items-center whitespace-nowrap px-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 sm:inline-flex"
+                className="hidden h-9 items-center whitespace-nowrap px-2 text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 lg:inline-flex"
               >
                 {t("nav.login")}
               </Link>
-              <Link href="/kayit" className={btnBrandSm}>
+              <Link href="/kayit" className={`${btnBrandSm} max-lg:!hidden`}>
                 {t("nav.register")}
               </Link>
             </>
@@ -178,22 +178,22 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <>
+              <div className="mt-3 grid grid-cols-2 gap-2">
                 <Link
                   href="/giris"
                   onClick={() => setMenuOpen(false)}
-                  className={`${btnOutline} mt-2 w-full`}
+                  className={`${btnOutline} w-full text-center`}
                 >
                   {t("nav.login")}
                 </Link>
                 <Link
                   href="/kayit"
                   onClick={() => setMenuOpen(false)}
-                  className={`${btnBrandSm} mt-2 w-full`}
+                  className={`${btnBrandSm} w-full text-center`}
                 >
                   {t("nav.register")}
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </nav>
