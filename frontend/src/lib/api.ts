@@ -56,7 +56,7 @@ import type {
 import { clearAuthSession } from "./authSession";
 import { notifyAdsChanged } from "./adsSync";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5050";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:5050");
 const API_TIMEOUT_MS = 8_000;
 
 export class ApiError extends Error {
