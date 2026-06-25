@@ -30,9 +30,10 @@ export const adminBtnWarning =
 export const adminBtnDanger =
   "inline-flex items-center justify-center rounded-lg bg-rose-600/90 px-3 py-1.5 text-sm font-medium text-white hover:bg-rose-500";
 
-export const adminTableWrap = "overflow-x-auto rounded-2xl border border-white/[0.08] bg-white/[0.02]";
+export const adminTableWrap =
+  "overflow-x-auto rounded-2xl border border-white/[0.08] bg-white/[0.02] md:overflow-x-auto";
 
-export const adminTable = "w-full text-left text-sm";
+export const adminTable = "table-mobile-stack w-full text-left text-sm";
 
 export const adminTh = "px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-400";
 

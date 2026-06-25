@@ -71,17 +71,19 @@ export default function AdminUsersPage() {
           <tbody>
             {users.map((u) => (
               <tr key={u.id} className={adminTr}>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="Kullanıcı">
                   <p className="font-medium text-white">
                     {u.firstName} {u.lastName}
                   </p>
                   <p className="text-xs text-slate-500">{u.email}</p>
                 </td>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="Roller">
                   <span className={adminBadge("blue")}>{u.roles.join(", ")}</span>
                 </td>
-                <td className={`${adminTd} tabular-nums`}>{u.adCount}</td>
-                <td className={adminTd}>
+                <td className={`${adminTd} tabular-nums`} data-label="İlan">
+                  {u.adCount}
+                </td>
+                <td className={adminTd} data-label="Durum">
                   <div className="flex flex-wrap gap-1">
                     {u.isBanned && <span className={adminBadge("rose")}>Ban</span>}
                     {u.isFrozen && <span className={adminBadge("amber")}>Dondurulmuş</span>}
@@ -92,7 +94,7 @@ export default function AdminUsersPage() {
                     )}
                   </div>
                 </td>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="">
                   <Link
                     href={`/admin/kullanicilar/${u.id}`}
                     className="text-sm font-medium text-blue-400 hover:text-blue-300"

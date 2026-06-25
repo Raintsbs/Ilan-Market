@@ -21,7 +21,7 @@ export function CompareBar() {
   if (ids.length === 0) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-40 w-[min(100%,28rem)] -translate-x-1/2 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
+    <div className="fixed bottom-4 left-1/2 z-40 w-[min(100%-2rem,28rem)] -translate-x-1/2 safe-bottom rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
           {t("compare.bar", { count: ids.length })}

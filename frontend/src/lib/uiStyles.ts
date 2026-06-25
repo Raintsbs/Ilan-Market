@@ -22,14 +22,14 @@ export const pageTitle = "text-2xl font-bold tracking-tight text-slate-900 dark:
 
 export const pageSubtitle = "mt-1 text-sm text-slate-600 dark:text-slate-400";
 
-export const pageContainer = "mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8";
+export const pageContainer = "container mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8";
 
-export const pageContainerMd = "mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8";
+export const pageContainerMd = "container mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8";
 
-export const pageContainerSm = "mx-auto max-w-2xl px-4 py-8 sm:px-6";
+export const pageContainerSm = "container mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8";
 
 export const pageContainerAuth =
-  "mx-auto flex min-h-[calc(100vh-8rem)] max-w-md flex-col justify-center px-4 py-12";
+  "container mx-auto flex min-h-[calc(100vh-8rem)] max-w-md flex-col justify-center px-4 py-8 sm:py-12";
 
 export const linkBack =
   "inline-flex items-center gap-1 text-sm font-medium text-slate-500 transition hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400";

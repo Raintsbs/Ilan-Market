@@ -24,7 +24,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <InstallPwaBanner />
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-20 sm:pb-8">{children}</main>
       <CompareBar />
       <Footer />
       <CookieConsent />

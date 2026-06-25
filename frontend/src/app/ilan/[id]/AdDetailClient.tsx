@@ -112,7 +112,7 @@ export function AdDetailClient({ id }: AdDetailClientProps) {
   }
 
   return (
-    <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <article className="container mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-500">
         <Link href="/" className={linkBack}>
           ← {t("nav.backAds")}

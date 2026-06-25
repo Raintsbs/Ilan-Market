@@ -130,44 +130,75 @@ function CompareContent() {
       {ads.length === 0 ? (
         <p className="mt-8 text-center text-slate-500">{t("compare.empty")}</p>
       ) : (
-        <div className={`mt-8 overflow-x-auto ${surfaceCard}`}>
-          <table className="min-w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-700">
-                <th className="sticky left-0 bg-white p-4 text-left dark:bg-slate-900">{t("compare.feature")}</th>
-                {ads.map((ad) => {
-                  const img = ad.imagePath ? getImageUrl(ad.imagePath) : null;
-                  return (
-                    <th key={ad.id} className="min-w-[180px] p-4 text-left align-top">
-                      {img && (
-                        <div className="relative mb-2 h-24 w-full overflow-hidden rounded-lg bg-slate-100">
-                          <Image src={img} alt="" fill className="object-cover" unoptimized />
-                        </div>
-                      )}
-                      <Link href={`/ilan/${ad.id}`} className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
-                        {ad.title}
-                      </Link>
-                    </th>
-                  );
-                })}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.key} className="border-b border-slate-100 dark:border-slate-800">
-                  <td className="sticky left-0 bg-white p-4 font-medium text-slate-600 dark:bg-slate-900 dark:text-slate-400">
-                    {row.label}
-                  </td>
-                  {ads.map((ad) => (
-                    <td key={ad.id} className="p-4 text-slate-900 dark:text-slate-100">
-                      {row.get(ad)}
-                    </td>
+        <>
+          {/* Mobil: kart görünümü */}
+          <div className="mt-8 space-y-4 d-md-none">
+            {ads.map((ad) => {
+              const img = ad.imagePath ? getImageUrl(ad.imagePath) : null;
+              return (
+                <div key={ad.id} className={`compare-mobile-card ${surfaceCard}`}>
+                  {img && (
+                    <div className="relative mb-3 h-36 w-full overflow-hidden rounded-lg bg-slate-100">
+                      <Image src={img} alt="" fill className="object-cover" unoptimized />
+                    </div>
+                  )}
+                  <Link
+                    href={`/ilan/${ad.id}`}
+                    className="mb-3 block font-semibold text-blue-600 hover:underline dark:text-blue-400"
+                  >
+                    {ad.title}
+                  </Link>
+                  {rows.map((row) => (
+                    <div key={row.key} className="compare-mobile-row">
+                      <span className="font-medium text-slate-500 dark:text-slate-400">{row.label}</span>
+                      <span className="text-right text-slate-900 dark:text-slate-100">{row.get(ad)}</span>
+                    </div>
                   ))}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Masaüstü: tablo */}
+          <div className={`mt-8 overflow-x-auto d-none d-md-block ${surfaceCard}`}>
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 dark:border-slate-700">
+                  <th className="sticky left-0 bg-white p-4 text-left dark:bg-slate-900">{t("compare.feature")}</th>
+                  {ads.map((ad) => {
+                    const img = ad.imagePath ? getImageUrl(ad.imagePath) : null;
+                    return (
+                      <th key={ad.id} className="min-w-[180px] p-4 text-left align-top">
+                        {img && (
+                          <div className="relative mb-2 h-24 w-full overflow-hidden rounded-lg bg-slate-100">
+                            <Image src={img} alt="" fill className="object-cover" unoptimized />
+                          </div>
+                        )}
+                        <Link href={`/ilan/${ad.id}`} className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+                          {ad.title}
+                        </Link>
+                      </th>
+                    );
+                  })}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.key} className="border-b border-slate-100 dark:border-slate-800">
+                    <td className="sticky left-0 bg-white p-4 font-medium text-slate-600 dark:bg-slate-900 dark:text-slate-400">
+                      {row.label}
+                    </td>
+                    {ads.map((ad) => (
+                      <td key={ad.id} className="p-4 text-slate-900 dark:text-slate-100">
+                        {row.get(ad)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       <Link href="/" className={`mt-8 ${linkBack}`}>

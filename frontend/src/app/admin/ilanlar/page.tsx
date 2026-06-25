@@ -218,22 +218,26 @@ export default function AdminAdsPage() {
           <tbody>
             {data?.items.map((ad) => (
               <tr key={ad.id} className={adminTr}>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="">
                   <input type="checkbox" checked={selected.has(ad.id)} onChange={() => toggle(ad.id)} />
                 </td>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="Başlık">
                   <Link href={`/ilan/${ad.id}`} className="text-blue-400 hover:text-blue-300" target="_blank">
                     {ad.title}
                   </Link>
                 </td>
-                <td className={`${adminTd} text-slate-400`}>{ad.categoryName}</td>
-                <td className={adminTd}>
+                <td className={`${adminTd} text-slate-400`} data-label="Kategori">
+                  {ad.categoryName}
+                </td>
+                <td className={adminTd} data-label="Durum">
                   <span className={adminBadge(ad.status === AdvertisementStatus.Pending ? "amber" : ad.status === AdvertisementStatus.Approved ? "green" : "rose")}>
                     {statusLabel[ad.status] ?? ad.status}
                   </span>
                 </td>
-                <td className={adminTd}>{ad.isFeatured ? "Evet" : "—"}</td>
-                <td className={adminTd}>
+                <td className={adminTd} data-label="Öne çıkan">
+                  {ad.isFeatured ? "Evet" : "—"}
+                </td>
+                <td className={adminTd} data-label="İşlem">
                   <div className="flex flex-wrap gap-1">
                     {ad.status === AdvertisementStatus.Pending && (
                       <>

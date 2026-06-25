@@ -21,7 +21,7 @@ export function Footer() {
 
   return (
     <footer className="mt-auto border-t border-slate-800 bg-slate-950 text-slate-300">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
             <p className="text-lg font-bold text-white">

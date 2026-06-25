@@ -47,7 +47,7 @@ export function Header() {
 
   return (
     <header className="site-header sticky top-0 z-50 border-b border-slate-200/80 shadow-sm shadow-slate-900/5 dark:border-slate-800 dark:shadow-black/20">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+      <div className="container flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 pr-1">
           <LogoMark />
           <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white sm:text-lg">
@@ -55,7 +55,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 lg:flex">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex">
           {primaryLinks.map((link) => (
             <Link key={link.href} href={link.href} className={`${navLinkClass(link.href)} shrink-0`}>
               {t(link.labelKey)}
@@ -113,7 +113,7 @@ export function Header() {
             aria-label={t("nav.menu")}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((o) => !o)}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 2xl:hidden"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 xl:hidden"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {menuOpen ? (
@@ -127,7 +127,7 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <nav className="border-t border-slate-100 bg-white/95 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 2xl:hidden">
+        <nav className="border-t border-slate-100 bg-white/95 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 xl:hidden">
           <div className="flex flex-col gap-0.5">
             {navLinks.map((link) => (
               <Link
@@ -143,14 +143,50 @@ export function Header() {
                 {t(link.labelKey)}
               </Link>
             ))}
-            {isAuthenticated && (
-              <Link
-                href="/ilan/yeni"
-                onClick={() => setMenuOpen(false)}
-                className={`${btnBrandSm} mt-2 w-full`}
-              >
-                + {t("nav.newAd")}
-              </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/hesabim"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl px-3 py-2.5 text-sm text-slate-600 dark:text-slate-300"
+                >
+                  {user?.firstName} — {t("nav.account")}
+                </Link>
+                <Link
+                  href="/ilan/yeni"
+                  onClick={() => setMenuOpen(false)}
+                  className={`${btnBrandSm} mt-2 w-full`}
+                >
+                  + {t("nav.newAd")}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    logout();
+                  }}
+                  className={`${btnOutline} mt-2 w-full`}
+                >
+                  {t("nav.logout")}
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/giris"
+                  onClick={() => setMenuOpen(false)}
+                  className={`${btnOutline} mt-2 w-full`}
+                >
+                  {t("nav.login")}
+                </Link>
+                <Link
+                  href="/kayit"
+                  onClick={() => setMenuOpen(false)}
+                  className={`${btnBrandSm} mt-2 w-full`}
+                >
+                  {t("nav.register")}
+                </Link>
+              </>
             )}
           </div>
         </nav>
