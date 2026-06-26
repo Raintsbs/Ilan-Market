@@ -4,13 +4,14 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$count = (Invoke-RestMethod -Uri "$ApiBase/api/advertisements?page=1&pageSize=1" -TimeoutSec 30).data.totalCount
+$listUrl = "$ApiBase/api/advertisements?page=1&pageSize=1"
+$count = (Invoke-RestMethod -Uri $listUrl -TimeoutSec 30).data.totalCount
 if ($count -gt 0) {
     Write-Host "OK: $count ilan mevcut."
     exit 0
 }
 
-Write-Host "Ilan yok ($count) — seed import calistiriliyor..."
+Write-Host "Ilan yok ($count) - seed import calistiriliyor..."
 & "$PSScriptRoot\import-local-ads.ps1" -ApiBase $ApiBase
-$count = (Invoke-RestMethod -Uri "$ApiBase/api/advertisements?page=1&pageSize=1" -TimeoutSec 30).data.totalCount
+$count = (Invoke-RestMethod -Uri $listUrl -TimeoutSec 30).data.totalCount
 Write-Host "Tamam: $count ilan."
