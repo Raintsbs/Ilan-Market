@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { AdDetailClient } from "./AdDetailClient";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5050";
+import { API_URL } from "@/lib/apiUrl";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 type PageProps = {

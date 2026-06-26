@@ -113,7 +113,10 @@ namespace AdvertisementApp.DataAccess.Seed
             if (config.GetValue("Seed:RunLegalPages", true))
                 await LegalPagesSeeder.EnsureAsync(context, logger);
 
+            await AdPackageSeeder.EnsureSeededAsync(context, logger);
             await TurkeyLocationSeeder.EnsureSeededAsync(context, logger);
+
+            await LocalAdvertisementsSeeder.EnsureImportedAsync(context, userManager, config, logger);
         }
 
         private static async Task EnsureSeedUserAsync(

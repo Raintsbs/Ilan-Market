@@ -1,7 +1,7 @@
 import type { ApiResponse, AuthResponse, LoginRequest, UserProfile } from "./types";
 import { ApiError } from "./api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5050";
+import { API_URL } from "./apiUrl";
 
 const TOKEN_KEY = "admin_session_token";
 const USER_KEY = "admin_session_user";

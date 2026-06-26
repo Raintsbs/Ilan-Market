@@ -1,16 +1,13 @@
 import type { NextConfig } from "next";
+import { API_URL, PRODUCTION_API_URL } from "./src/lib/apiUrl";
 
-const defaultApiUrl = "http://localhost:5050";
+const defaultApiUrl = process.env.VERCEL === "1" ? PRODUCTION_API_URL : "http://localhost:5050";
 
 function resolveApiUrl(): string {
-  const raw = (process.env.NEXT_PUBLIC_API_URL ?? defaultApiUrl).trim();
   try {
-    const parsed = new URL(raw);
-    return parsed.origin;
+    return new URL(API_URL).origin;
   } catch {
-    console.warn(
-      `[next.config] Invalid NEXT_PUBLIC_API_URL "${raw}" — using ${defaultApiUrl}`,
-    );
+    console.warn(`[next.config] Invalid API URL "${API_URL}" — using ${defaultApiUrl}`);
     return defaultApiUrl;
   }
 }

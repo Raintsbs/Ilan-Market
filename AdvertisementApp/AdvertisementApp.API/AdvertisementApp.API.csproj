@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Content Include="..\scripts\data\turkey-locations.json" Link="scripts\data\turkey-locations.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\scripts\data\seed-advertisements.json" Link="scripts\data\seed-advertisements.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

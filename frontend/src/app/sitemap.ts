@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5050";
+import { API_URL } from "@/lib/apiUrl";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 async function fetchJson(url: string, revalidate: number) {

@@ -122,7 +122,7 @@ Tarayıcıda Vercel adresini açın:
 | Sorun | Çözüm |
 |--------|--------|
 | Vercel 404 DEPLOYMENT_NOT_FOUND | Root=`frontend`, branch=`master`, Redeploy |
-| Site açılıyor, veri yok | `NEXT_PUBLIC_API_URL` yanlış veya API down |
+| Site açılıyor, veri yok | `vercel.json` içinde API URL var; API redeploy sonrası boşsa `scripts/ensure-production-ads.ps1` çalıştırın. Kalıcı DB için Railway → api → **Volumes** → mount `/app/data` |
 | API CORS hatası | `Cors__AllowedOrigins__0` = tam Vercel URL (https, sondaki / yok) |
 | API DB bağlanamıyor | SQL şifresi connection string ile aynı mı; host `sqlserver` |
 | Railway build fail | Root Directory `AdvertisementApp` mi kontrol edin |

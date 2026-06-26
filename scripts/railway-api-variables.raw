@@ -21,3 +21,5 @@ App__ApiUrl=https://${{RAILWAY_PUBLIC_DOMAIN}}
 Cors__AllowedOrigins__0=https://ilan-market.vercel.app
 
 Seed__RunCategoryCatalog=true
+Seed__ImportLocalAds=true
+Seed__RunOnStartup=true
