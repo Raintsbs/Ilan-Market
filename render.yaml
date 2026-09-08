@@ -1,4 +1,5 @@
 # Render.com free web service — Railway trial bitince alternatif
+# Dashboard: https://dashboard.render.com/blueprints → New Blueprint → bu repo
 services:
   - type: web
     name: ilan-market-api
@@ -6,12 +7,15 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     plan: free
+    region: frankfurt
     healthCheckPath: /health
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Staging
       - key: ASPNETCORE_URLS
         value: http://0.0.0.0:10000
+      - key: PORT
+        value: "10000"
       - key: Database__Provider
         value: Sqlite
       - key: ConnectionStrings__DefaultConnection
@@ -21,10 +25,7 @@ services:
       - key: App__FrontendUrl
         value: https://ilan-market.vercel.app
       - key: App__ApiUrl
-        fromService:
-          type: web
-          name: ilan-market-api
-          property: host
+        value: https://ilan-market-api.onrender.com
       - key: Cors__AllowedOrigins__0
         value: https://ilan-market.vercel.app
       - key: Cors__AllowedOrigins__1
@@ -47,9 +48,7 @@ services:
         value: "true"
       - key: Email__From
         value: noreply@ilanmarket.staging
+      - key: Email__PickupDirectory
+        value: email-pickup
       - key: Storage__Provider
         value: Local
-    disk:
-      name: ilan-data
-      mountPath: /app/data
-      sizeGB: 1

@@ -1,5 +1,5 @@
-/** Canlı API — Vercel env boş kalsa bile site bu adrese bağlanır. */
-export const PRODUCTION_API_URL = "https://ilan-market-production-b980.up.railway.app";
+/** Canlı API — Railway trial bitince geçici tünel; kalıcı için Railway Hobby veya Render. */
+export const PRODUCTION_API_URL = "https://ilan-market-api.loca.lt";
 
 const LOCAL_API_URL = "http://localhost:5050";
 
@@ -24,3 +24,11 @@ export function resolveApiUrl(): string {
 }
 
 export const API_URL = resolveApiUrl();
+
+/** localtunnel interstitial bypass */
+export function apiExtraHeaders(): Record<string, string> {
+  if (API_URL.includes("loca.lt")) {
+    return { "Bypass-Tunnel-Reminder": "true" };
+  }
+  return {};
+}

@@ -55,9 +55,8 @@ import type {
 
 import { clearAuthSession } from "./authSession";
 import { notifyAdsChanged } from "./adsSync";
-
-import { API_URL } from "@/lib/apiUrl";
-const API_TIMEOUT_MS = 8_000;
+import { API_URL, apiExtraHeaders } from "@/lib/apiUrl";
+const API_TIMEOUT_MS = 20_000;
 
 export class ApiError extends Error {
   constructor(
@@ -152,6 +151,10 @@ export async function request<T>(
     headers.set("Content-Type", "application/json");
   }
 
+  for (const [key, value] of Object.entries(apiExtraHeaders())) {
+    headers.set(key, value);
+  }
+
   if (auth) {
     const token = getToken();
     if (token) headers.set("Authorization", `Bearer ${token}`);
@@ -179,6 +182,9 @@ export async function request<T>(
           const retryHeaders = new Headers(options.headers);
           if (!(options.body instanceof FormData)) {
             retryHeaders.set("Content-Type", "application/json");
+          }
+          for (const [key, value] of Object.entries(apiExtraHeaders())) {
+            retryHeaders.set(key, value);
           }
           const retryToken = getToken();
           if (retryToken) retryHeaders.set("Authorization", `Bearer ${retryToken}`);
@@ -749,7 +755,10 @@ export async function isApiReachable(timeoutMs = 2500): Promise<boolean> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-    const res = await fetch(`${API_URL}/api/auth/public-config`, { signal: controller.signal });
+    const res = await fetch(`${API_URL}/api/auth/public-config`, {
+      signal: controller.signal,
+      headers: apiExtraHeaders(),
+    });
     clearTimeout(timeoutId);
     return res.ok;
   } catch {
