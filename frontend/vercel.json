@@ -3,6 +3,6 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://ilan-market-api.loca.lt"
+    "NEXT_PUBLIC_API_URL": "https://modern-treefrog-64.loca.lt"
   }
 }

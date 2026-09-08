@@ -1,5 +1,5 @@
-/** Canlı API — Railway trial bitince geçici tünel; kalıcı için Railway Hobby veya Render. */
-export const PRODUCTION_API_URL = "https://ilan-market-api.loca.lt";
+/** Canlı API — geçici localtunnel (Render deploy sonrası güncellenecek). */
+export const PRODUCTION_API_URL = "https://modern-treefrog-64.loca.lt";
 
 const LOCAL_API_URL = "http://localhost:5050";
 
