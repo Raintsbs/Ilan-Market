@@ -25,6 +25,8 @@ export const en: Record<MessageKey, string> = {
   "footer.contact": "Contact",
   "footer.contactEmail": "Email",
   "footer.tagline": "Modern classifieds platform",
+  "footer.partners": "Partner apps",
+  "footer.emlakPortfolio": "Emlak Portföy",
   "toast.close": "Close",
   "toast.photoRemoved": "Your profile photo has been removed.",
   "toast.photoUpdated": "Your profile photo has been updated.",

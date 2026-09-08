@@ -11,7 +11,7 @@ import { EmptyStateAnimated } from "@/components/EmptyStateAnimated";
 import { RecentlyViewedSection } from "@/components/RecentlyViewedSection";
 import { Pagination } from "@/components/Pagination";
 import { useLocale } from "@/context/LocaleContext";
-import { api } from "@/lib/api";
+import { api, API_URL } from "@/lib/api";
 import { useAdsChangeListener } from "@/lib/adsSync";
 import { gridAds, siteShell } from "@/lib/uiStyles";
 import type { Advertisement, Category, PagedResult } from "@/lib/types";
@@ -370,8 +370,16 @@ export function HomePage() {
           <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 px-6 py-8 text-center text-amber-800 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-200">
             <p className="font-medium">{error}</p>
             <p className="mt-2 text-sm opacity-90">
-              API: http://localhost:5050 — terminalde{" "}
-              <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">dotnet run --project AdvertisementApp.API</code>
+              API: {API_URL}
+              {API_URL.includes("localhost") ? (
+                <>
+                  {" "}
+                  — terminalde{" "}
+                  <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">
+                    dotnet run --project AdvertisementApp.API
+                  </code>
+                </>
+              ) : null}
             </p>
           </div>
         ) : result && result.items.length > 0 ? (

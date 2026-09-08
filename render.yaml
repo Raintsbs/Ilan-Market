@@ -1,0 +1,55 @@
+# Render.com free web service — Railway trial bitince alternatif
+services:
+  - type: web
+    name: ilan-market-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Staging
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:10000
+      - key: Database__Provider
+        value: Sqlite
+      - key: ConnectionStrings__DefaultConnection
+        value: Data Source=/app/data/ilanmarket.db
+      - key: Jwt__Key
+        generateValue: true
+      - key: App__FrontendUrl
+        value: https://ilan-market.vercel.app
+      - key: App__ApiUrl
+        fromService:
+          type: web
+          name: ilan-market-api
+          property: host
+      - key: Cors__AllowedOrigins__0
+        value: https://ilan-market.vercel.app
+      - key: Cors__AllowedOrigins__1
+        value: https://emlak-portfolio.vercel.app
+      - key: Cors__AllowedOrigins__2
+        value: http://localhost:3000
+      - key: Seed__RunOnStartup
+        value: "true"
+      - key: Seed__RunCategoryCatalog
+        value: "true"
+      - key: Seed__ImportLocalAds
+        value: "true"
+      - key: Seed__RunLegalPages
+        value: "true"
+      - key: Payments__AllowDemo
+        value: "true"
+      - key: Sms__Provider
+        value: dev
+      - key: Email__Enabled
+        value: "true"
+      - key: Email__From
+        value: noreply@ilanmarket.staging
+      - key: Storage__Provider
+        value: Local
+    disk:
+      name: ilan-data
+      mountPath: /app/data
+      sizeGB: 1

@@ -59,6 +59,19 @@ export function Footer() {
             </div>
             <div>
               <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                {t("footer.partners")}
+              </h3>
+              <div className="mt-3 flex flex-col gap-2">
+                <a
+                  href="https://emlak-portfolio.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-slate-300 transition hover:text-white"
+                >
+                  {t("footer.emlakPortfolio")}
+                </a>
+              </div>
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 {t("footer.contact")}
               </h3>
               <p className="mt-3 text-sm text-slate-400">{t("footer.contactEmail")}</p>

@@ -204,7 +204,7 @@ export async function request<T>(
     }
     if (err instanceof TypeError) {
       throw new ApiError(
-        "API'ye bağlanılamadı. http://localhost:5050 çalışıyor mu?",
+        `API'ye bağlanılamadı. ${API_URL} çalışıyor mu?`,
         0,
       );
     }

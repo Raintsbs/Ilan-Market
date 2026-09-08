@@ -23,6 +23,8 @@ export const tr = {
   "footer.contact": "İletişim",
   "footer.contactEmail": "E-posta",
   "footer.tagline": "Modern ilan platformu",
+  "footer.partners": "Ortak uygulamalar",
+  "footer.emlakPortfolio": "Emlak Portföy",
   "toast.close": "Kapat",
   "toast.photoRemoved": "Profil fotoğrafınız kaldırıldı.",
   "toast.photoUpdated": "Profil fotoğrafınız güncellendi.",

@@ -140,3 +140,15 @@ Tarayıcıda Vercel adresini açın:
 ## Sonraki push’lar
 
 GitHub’a `git push` → Vercel ve Railway otomatik yeniden deploy eder (GitHub bağlıysa).
+
+### Railway trial bittiğinde
+
+`Your trial has expired` görürseniz API 404 verir; site “API bağlantısı” hatası gösterir.
+
+1. [railway.app](https://railway.app) → **Hobby** planı açın (~$5)  
+2. `npx @railway/cli redeploy --yes`  
+3. Gerekirse: `powershell -File scripts/ensure-production-ads.ps1`
+
+**Alternatif:** Repo kökündeki `render.yaml` ile [Render](https://render.com) → New Blueprint → bu repo. Deploy bitince Vercel `NEXT_PUBLIC_API_URL` = Render URL yapın.
+
+**Emlak Portföy bağlantısı:** CORS’ta `https://emlak-portfolio.vercel.app` izinli; sitede footer’da ortak uygulama linki var.
