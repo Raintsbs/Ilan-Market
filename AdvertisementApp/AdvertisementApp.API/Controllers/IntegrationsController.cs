@@ -1,8 +1,11 @@
+using System.Globalization;
 using System.Security.Claims;
 using System.Text.Json;
 using AdvertisementApp.API.Extensions;
+using AdvertisementApp.Business.Helpers;
 using AdvertisementApp.Business.Interface;
 using AdvertisementApp.Common.Constants;
+using AdvertisementApp.Common.Helpers;
 using AdvertisementApp.Common.Models;
 using AdvertisementApp.DataAccess.Context;
 using AdvertisementApp.DataAccess.Entities;
@@ -67,16 +70,22 @@ namespace AdvertisementApp.API.Controllers
 
             var listingType = ResolveListingType(body);
             var details = BuildListingDetailsJson(body);
-            var imagePaths = body.Images?.Where(u => !string.IsNullOrWhiteSpace(u)).Take(12).ToList()
-                ?? new List<string>();
+            var imagePaths = (body.Images ?? new List<string>())
+                .Where(u => !string.IsNullOrWhiteSpace(u))
+                .Select(u => u.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Take(12)
+                .ToList();
+
+            var description = BuildDescription(body);
 
             var dto = new AdvertisementCreateDto
             {
                 UserId = user.Id,
                 CategoryId = categoryId,
                 Title = body.Title.Trim(),
-                Description = Truncate(body.Description?.Trim() ?? body.Title.Trim(), 500),
-                Content = body.Description?.Trim() ?? body.Title.Trim(),
+                Description = Truncate(description, 500),
+                Content = description,
                 ListingType = listingType,
                 ListingDetailsJson = details,
                 ImagePath = imagePaths.FirstOrDefault(),
@@ -88,13 +97,15 @@ namespace AdvertisementApp.API.Controllers
             if (!created.Success || created.Data == null)
                 return BadRequest(ApiResponse.Fail(created.Message ?? "İlan oluşturulamadı."));
 
-            // Partner yayınları hemen görünsün
+            // Partner yayınları hemen görünsün; indeks alanlarını da güncelle
             var entity = await _db.Advertisements.FirstOrDefaultAsync(a => a.Id == created.Data.Id);
             if (entity != null)
             {
                 entity.Status = AdvertisementStatus.Approved;
                 entity.IsActive = true;
+                entity.ListingDetailsJson = details;
                 entity.AdminNote = $"emlak-portfolio:{body.ExternalId ?? "-"}";
+                ListingIndexSync.Apply(entity);
                 await _db.SaveChangesAsync();
             }
 
@@ -102,9 +113,12 @@ namespace AdvertisementApp.API.Controllers
             return Ok(ApiResponse<object>.Ok(new
             {
                 id = created.Data.Id,
-                title = created.Data.Title,
+                title = body.Title.Trim(),
                 url = $"{frontend}/ilan/{created.Data.Id}",
                 externalId = body.ExternalId,
+                price = body.Price,
+                city = body.City,
+                district = body.District,
             }, "İlan İlanMarket'e yayınlandı."));
         }
 
@@ -181,24 +195,66 @@ namespace AdvertisementApp.API.Controllers
 
         private static string BuildListingDetailsJson(EmlakPublishRequest body)
         {
-            var payload = new Dictionary<string, object?>
+            var details = new ListingDetailsDto
             {
-                ["price"] = body.Price,
-                ["city"] = body.City,
-                ["district"] = body.District,
-                ["address"] = body.Address,
-                ["rooms"] = body.Rooms,
-                ["area"] = body.Area,
-                ["floor"] = body.Floor,
-                ["buildingAge"] = body.BuildingAge,
-                ["heating"] = body.Heating,
-                ["sellerType"] = "Mağazadan",
-                ["condition"] = "İkinci El",
-                ["source"] = "emlak-portfolio",
-                ["externalId"] = body.ExternalId,
+                Price = body.Price,
+                City = NullIfEmpty(body.City),
+                District = NullIfEmpty(body.District),
+                RoomCount = NullIfEmpty(body.Rooms),
+                SquareMeters = body.Area is > 0
+                    ? body.Area.Value.ToString("0.##", CultureInfo.InvariantCulture)
+                    : null,
+                Floor = body.Floor?.ToString(CultureInfo.InvariantCulture),
+                BuildingAge = body.BuildingAge?.ToString(CultureInfo.InvariantCulture),
+                Heating = NullIfEmpty(body.Heating),
+                SellerType = "Mağazadan",
+                Condition = "İkinci El",
+                DeedStatus = "Belirtilmemiş",
             };
-            return JsonSerializer.Serialize(payload);
+
+            // Adres varsa district satırına ek bilgi olarak yazılmasın; açıklamada kalsın.
+            // ListingDetailsDto'da address yok — getLocationLine city+district kullanır.
+            return ListingDetailsHelper.Serialize(details)
+                ?? JsonSerializer.Serialize(new { price = body.Price, city = body.City, district = body.District });
         }
+
+        private static string BuildDescription(EmlakPublishRequest body)
+        {
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(body.Description))
+                parts.Add(body.Description.Trim());
+
+            var meta = new List<string>();
+            if (!string.IsNullOrWhiteSpace(body.City) || !string.IsNullOrWhiteSpace(body.District))
+                meta.Add($"{body.District} {body.City}".Trim());
+            if (!string.IsNullOrWhiteSpace(body.Address))
+                meta.Add(body.Address.Trim());
+            if (!string.IsNullOrWhiteSpace(body.Rooms))
+                meta.Add($"{body.Rooms} oda");
+            if (body.Area is > 0)
+                meta.Add($"{body.Area.Value.ToString("0.##", CultureInfo.InvariantCulture)} m²");
+            if (body.Floor != null)
+                meta.Add($"{body.Floor}. kat");
+            if (body.BuildingAge != null)
+                meta.Add($"Bina yaşı: {body.BuildingAge}");
+            if (!string.IsNullOrWhiteSpace(body.Heating))
+                meta.Add($"Isıtma: {body.Heating}");
+            if (body.Price != null)
+                meta.Add($"Fiyat: {body.Price.Value.ToString("N0", new CultureInfo("tr-TR"))} TL");
+            if (!string.IsNullOrWhiteSpace(body.Type))
+                meta.Add($"Tip: {body.Type}");
+            if (!string.IsNullOrWhiteSpace(body.Status))
+                meta.Add($"Durum: {body.Status}");
+
+            if (meta.Count > 0)
+                parts.Add(string.Join(" · ", meta));
+
+            var text = string.Join("\n\n", parts);
+            return string.IsNullOrWhiteSpace(text) ? body.Title.Trim() : text;
+        }
+
+        private static string? NullIfEmpty(string? value)
+            => string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 
         private static string Truncate(string value, int max)
             => value.Length <= max ? value : value[..max];

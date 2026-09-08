@@ -1,5 +1,5 @@
-/** Canlı API — geçici localtunnel (Render deploy sonrası güncellenecek). */
-export const PRODUCTION_API_URL = "https://modern-treefrog-64.loca.lt";
+﻿/** Canlı API — Render (Railway trial bitince kalıcı host). */
+export const PRODUCTION_API_URL = "https://ilan-market-api.onrender.com";
 
 const LOCAL_API_URL = "http://localhost:5050";
 
@@ -25,7 +25,6 @@ export function resolveApiUrl(): string {
 
 export const API_URL = resolveApiUrl();
 
-/** localtunnel interstitial bypass */
 export function apiExtraHeaders(): Record<string, string> {
   if (API_URL.includes("loca.lt")) {
     return { "Bypass-Tunnel-Reminder": "true" };
